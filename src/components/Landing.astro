@@ -1,7 +1,7 @@
 ---
 import { useTranslations } from "../i18n/utils";
 import { getRelativeLocaleUrl } from "astro:i18n";
-
+import { initThreeScene } from '../tresde.js';
 const currentLang = Astro.currentLocale || 'es'
 const translateLabels = useTranslations(currentLang as "es" | "en" );
 ---
@@ -9,8 +9,8 @@ const translateLabels = useTranslations(currentLang as "es" | "en" );
 <canvas class="webgl"></canvas>
 
 <script type="module">
-  import { initThreeScene } from '../src/tresde.js';
-
+  
+  import { initThreeScene } from '/src/tresde.js';
   // Ejecutar la inicialización en el primer render
   initThreeScene();
 
@@ -36,7 +36,8 @@ const translateLabels = useTranslations(currentLang as "es" | "en" );
     position: absolute; /* Coloca el canvas dentro del contenedor */
     top: 0;
     left: 0;
-    width: 100%; /* Escala el canvas para ocupar todo el contenedor */
+    width: 100%;
+    max-width: 100vw; /* Escala el canvas para ocupar todo el contenedor */
     height: 100%; /* Escala el canvas verticalmente */
     z-index: -1; /* Coloca el canvas detrás de otros elementos */
     outline: none;
@@ -90,7 +91,7 @@ padding-right: 3rem;
 
 @media (max-width: 1500px) {
   .textos{
-    max-width:300px;
+    max-width:200px;
     font-size: 0.9rem;
   }
  

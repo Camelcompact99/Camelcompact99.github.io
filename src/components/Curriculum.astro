@@ -110,12 +110,14 @@ const premios= currentCurriculum.filter(curriculo=>curriculo.education === false
   gap: 20px; /* Espaciado entre columnas */
   margin: 0 auto;
   font-size: 0.8rem;
-  width: 100%;
+  width: 99%;
   margin-block: 1rem;
   border: 1px solid black; /* El grosor y el color del "stroke" */;
   padding-inline: 0.1rem;
   font-family: "OT Bulb Monoline";
   text-transform: uppercase;
+  max-width:100% ;
+  
 }
 .lista p {
   padding-inline: 0.5rem;
@@ -191,6 +193,9 @@ const premios= currentCurriculum.filter(curriculo=>curriculo.education === false
 			.parrafobio{
 				font-size: 0.8rem;
 			}
+      .lista{
+        gap: 10px;
+      }
 		}
 
 
