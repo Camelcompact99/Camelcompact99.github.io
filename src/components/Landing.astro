@@ -1,7 +1,7 @@
 ---
 import { useTranslations } from "../i18n/utils";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { initThreeScene } from '../../public/tresde.js';
+
 const currentLang = Astro.currentLocale || 'es'
 const translateLabels = useTranslations(currentLang as "es" | "en" );
 ---
@@ -10,7 +10,7 @@ const translateLabels = useTranslations(currentLang as "es" | "en" );
 
 <script type="module">
   
-  import { initThreeScene } from '/public/tresde.js';
+  import { initThreeScene } from '/tresde.js';
   // Ejecutar la inicialización en el primer render
   initThreeScene();
 
