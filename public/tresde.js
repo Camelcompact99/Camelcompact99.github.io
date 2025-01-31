@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 
-export function initThreeScene() {
+ function initThreeScene() {
     let mixer, caerse, idleAction, raycaster = new THREE.Raycaster();
     let caerseruns; 
     let modelo;  
