@@ -1,0 +1,109 @@
+---
+import { useTranslations } from "../i18n/utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+const currentLang = Astro.currentLocale || 'es'
+const translateLabels = useTranslations(currentLang as "es" | "en" );
+---
+
+<canvas class="webgl"></canvas>
+
+<script type="module">
+  import { initThreeScene } from '../src/tresde.js';
+
+  // Ejecutar la inicialización en el primer render
+  initThreeScene();
+
+  // Reejecutar Three.js después de una transición de vista
+  document.addEventListener('astro:after-swap', () => {
+    initThreeScene();
+  });
+</script>
+
+<style>
+  /* Contenedor para reservar espacio para el canvas */
+  .canvas-container {
+    box-sizing: border-box;
+    position: relative; /* Para posicionar el canvas dentro */
+    width: 100%; /* Asegura que ocupa todo el ancho de la pantalla */
+    height: 100vh; /* Reserva el espacio vertical completo */
+    overflow: hidden; /* Para evitar desbordamiento */
+  }
+
+  /* Canvas de Three.js */
+  .webgl {
+    display: block;
+    position: absolute; /* Coloca el canvas dentro del contenedor */
+    top: 0;
+    left: 0;
+    width: 100%; /* Escala el canvas para ocupar todo el contenedor */
+    height: 100%; /* Escala el canvas verticalmente */
+    z-index: -1; /* Coloca el canvas detrás de otros elementos */
+    outline: none;
+  }
+
+  /* Otros estilos (tu contenido normal) */
+  section {
+    height: 100vh;
+  }
+
+  .centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .centered img {
+    width: 200px;
+    stroke: 5px;
+    z-index: 10; /* Mantén las imágenes encima del canvas */
+  }
+  .textos {
+    position: absolute;
+    bottom: 30%;
+    left: 2.5%;
+    margin: 0;
+    font-size: 1rem;
+    padding-right: 0rem;
+    color: black;
+    max-width:600px;
+    z-index: 1; /* Asegura que el texto esté encima del fondo */
+    transition:0.3s ;
+    overflow: hidden; /* Oculta el texto fuera del contenedor */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    animation: mostrarTexto 1s, ease-out, forwards;
+    text-wrap: wrap;
+    background-color:rgba(210, 210, 210, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    
+}
+
+.textos:hover {
+background-color: rgb(0,255,0);
+padding-bottom: 3rem;
+padding-right: 3rem;
+ 
+}
+
+@media (max-width: 1500px) {
+  .textos{
+    max-width:300px;
+    font-size: 0.9rem;
+  }
+ 
+}
+</style>
+
+<!-- Estructura HTML -->
+ <html>
+  <body>
+<div class="canvas-container" id = "landing">
+  <div class ="textos">{translateLabels('intro')}</div>
+  <canvas class="webgl"></canvas>
+</div>
+</body>
+</html>
+

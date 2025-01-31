@@ -1,0 +1,197 @@
+---
+import { curriculum } from "../i18n/ui";
+import { useTranslations } from "../i18n/utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+const currentLang = Astro.currentLocale || 'es'
+const translateLabels = useTranslations(currentLang as "es" | "en" );
+
+
+const currentCurriculum = curriculum[currentLang as "es" | "en"];
+
+const estudios= currentCurriculum.filter(curriculo=>curriculo.education === true);
+const premios= currentCurriculum.filter(curriculo=>curriculo.education === false);
+
+
+
+---
+
+<section class="seccioncurriculum" aria-label="El Curriculum de Alejandro Vázquez" id="curriculum" >
+
+    <img  class = "cards" src="/images/curriculum.webp" alt="fotocurriculum Alejandro Vazquez">      
+ 
+  <div class = "bio" aria-label = "biografía Alejandro Vázquez"> 
+      <h2>{translateLabels('curriculum')}</h2>
+      <p class="parrafobio">{translateLabels('bio1')}</p>
+  </div>
+  <div class="estudios">
+      <h1>{translateLabels('estudios')}</h1>
+      <div>
+          {
+          estudios.map(({index,name,institution, year })=> {
+              return (
+                  <div class="lista">
+                  <p>{ name }</p>
+                  <p> { institution }</p>
+                  <p class="columnafinal">{ year }</p>
+                  </div>
+                  )
+          })
+          }
+      </div>
+  </div>
+  <div class="premios">
+      <h1>{translateLabels('premios')}</h1>
+      <div >
+          {
+          premios.map(({index,name,institution, year })=> {
+              return (
+                  <div class="lista">
+                  
+                  <p>{ name }</p>
+                  <p> { institution }</p>
+                  <p class="columnafinal">{ year }</p>
+                  </div>
+                  )
+          })
+          }
+      </div>
+  </div>
+
+  <div class="press">
+    <h1>{translateLabels('prensa')}</h1>
+    <ul><li><a href="https://metalmagazine.eu/es/post/pluto-miss-espacial-24">metalmagazine</a></li>
+    <li><a href="https://www.makma.net/pam24-upv-cuestionar-los-limites/"> makma </a></li>
+    <li><a href="https://www.elespanol.com/treintayseis/cultura/20211225/voces-vigo-emergente-alejandro-vazquez-ganador-certamen-internacional-vialia/637436347_0.html"> 36tritayseis</a></li>
+    <li><a href="https://www.artrabbit.com/events/postdigital-landscapes"> artrabbit </a></li></ul>
+  </div>
+  <div class="press">
+    <h1> {translateLabels('habilidades')}</h1>
+    <ul>
+      <a href={`/${currentLang}/works/safety`}><li>3D</li></a>
+      <a href='#landing'><li>{translateLabels('diseñoweb')}</li></a>
+      <a href='#landing'><li>Three.js</li></a>
+      <a href={`/${currentLang}/works/cordero`}><li>{translateLabels('arduino')}</li></a>
+      <a href={`/${currentLang}/works/cordero`}><li>{translateLabels('visuales')}</li></a>
+      <a href={`/${currentLang}/works/mitrabajomaspersonal`}><li>{translateLabels('foto')}</li></a>
+      <a href={`/${currentLang}/works/cordero`}><li>{translateLabels('prototipado')}</li></a>
+    </ul>
+  </div>
+
+</section>
+
+<style>
+
+.seccioncurriculum h2 {
+  font-size: 2.25rem;
+        font-weight: 600;
+        margin-bottom: 0px;
+        padding-bottom: 0px ;
+        text-transform: lowercase;
+        margin-bottom: 0%;
+}
+
+.seccioncurriculum{
+  position: relative;
+  margin-bottom: 5rem;
+  padding-top: 5em;
+}
+.parrafobio{
+  max-width: 1000px;
+  margin-top: 0px; 
+  margin-bottom: 3rem; 
+  text-justify: inter-character;
+}
+
+.lista {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* Tres columnas: izquierda, centro y derecha */
+  align-items: center; /* Alinea verticalmente el contenido de todas las filas */
+  gap: 20px; /* Espaciado entre columnas */
+  margin: 0 auto;
+  font-size: 0.8rem;
+  width: 100%;
+  margin-block: 1rem;
+  border: 1px solid black; /* El grosor y el color del "stroke" */;
+  padding-inline: 0.1rem;
+  font-family: "OT Bulb Monoline";
+  text-transform: uppercase;
+}
+.lista p {
+  padding-inline: 0.5rem;
+}
+.columnafinal{
+  justify-self: end;
+}
+
+.cards{
+  position: absolute;
+  z-index: 2;
+  width: 200px;
+  animation: move 20s  ease-in-out infinite alternate; 
+ 
+}
+
+.press{
+  position: relative;
+  display: block;
+  max-width:100% ;
+}
+
+.press ul {
+  align-self: center;
+  justify-self: center;
+  position: relative;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  display: flex;
+  align-items: space-evenly;
+  
+  justify-content:space-evenly;
+  
+  max-width: 100%;
+  list-style: none;
+  padding-inline: 0;
+}
+
+.press li {
+  font-size: 0.8rem;
+  padding-inline: 1rem;
+  padding-block:0.6rem ;
+  margin-block: 0.5rem;
+  border: 1px solid black;
+  font-family:  "OT Bulb Monoline";
+  transition: 0.5s;
+}
+
+.press a {
+  color: black ;
+  text-transform: uppercase;
+}
+
+.press li:hover {
+  background-color:rgb(0, 255,0); 
+  padding-inline:3rem ;
+}
+
+
+@keyframes move{
+  from{
+      top: 0%;
+      right: 0%;
+      rotate: 5deg;
+  }
+  to{
+      top: 90%;
+      right: 80%;
+      rotate: -50deg;
+  }
+}
+@media (max-width: 640px) {
+			.parrafobio{
+				font-size: 0.8rem;
+			}
+		}
+
+
+</style>

@@ -1,0 +1,226 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { useTranslations } from "../i18n/utils";
+import { languageList } from "../i18n/ui";
+
+// Crear el tipo de idiomas válidos basado en las claves de languageList
+type LanguageKey = keyof typeof languageList;
+
+// Validar el idioma actual
+const validateLocale = (locale: string): LanguageKey => {
+  return Object.keys(languageList).includes(locale) ? (locale as LanguageKey) : "es";
+};
+
+const currentLang: LanguageKey = validateLocale(Astro.currentLocale || "es");
+const translateLabels = useTranslations(currentLang);
+
+const languages = Object.entries(languageList) as [LanguageKey, string][];
+const currentLangIndex = languages.findIndex(([key]) => key === currentLang);
+const nextLangIndex = (currentLangIndex + 1) % languages.length;
+const nextLang = languages[nextLangIndex][0];
+---
+
+
+
+
+
+
+<div class="wrapp">
+  <div class="navbar">
+    <!-- Botón de menú visible solo en pantallas pequeñas -->
+    <button id="menu-button" aria-label="Abrir menú" class="menu-button">Menu</button>
+
+    <!-- Enlaces que se mostrarán/ocultarán -->
+    <div id="menu-links" class="links">
+      <a class="esconder" href="#landing">alejandro-vazquez.com</a>
+      <a href="#grid"><span class="esconder">01.</span>{translateLabels("navbar_works")}</a>
+      <a href="#curriculum"><span class="esconder">02.</span>{translateLabels("navbar_about")}</a>
+      <a href="#contact"><span class="esconder">03.</span>{translateLabels("navbar_contact")}</a>
+    </div>
+
+    <!-- Botón para cambiar de idioma -->
+    <button
+      onclick={`window.location.href='/${nextLang}'`}
+      aria-label={`Cambiar a ${languageList[nextLang]}`}
+    >
+      {languageList[currentLang]} // {languageList[nextLang]}
+    </button>
+  </div>
+</div>
+
+<!-- Script para manejar el comportamiento del menú -->
+
+<script type="module">
+  function menuStuff() {
+  
+    const menuButton = document.getElementById("menu-button");
+    const menuLinks = document.getElementById("menu-links");
+  
+    const isMobile = window.matchMedia("(max-width: 640px)").matches;
+  
+    if (isMobile) {
+    // Retrieve menu state from localStorage and apply it
+    const menuState = localStorage.getItem("menuState") || "closed";
+    menuLinks.classList.toggle("open", menuState === "open");
+    menuLinks.classList.toggle("closed", menuState !== "open");
+    menuButton.textContent = menuState === "open" ? "Cerrar" : "Menu";
+  
+    // Ensure previous event listeners are removed to avoid duplication
+    menuButton.removeEventListener("click", toggleMenu);
+    menuButton.addEventListener("click", toggleMenu);
+    menuLinks.removeEventListener("click", closeMenu);
+    menuLinks.addEventListener("click", closeMenu);
+    }
+  
+    function toggleMenu() {
+    const isOpen = menuLinks.classList.contains("open");
+    menuLinks.classList.toggle("open", !isOpen);
+    menuLinks.classList.toggle("closed", isOpen);
+    menuButton.textContent = isOpen ? "Menu" : "Cerrar";
+    localStorage.setItem("menuState", isOpen ? "closed" : "open");
+    }
+  
+    function closeMenu() {
+    menuLinks.classList.remove("open");
+    menuLinks.classList.add("closed");
+    menuButton.textContent = "Menu";
+    localStorage.setItem("menuState", "closed");
+    }
+  }
+  
+  // Ensure script runs on initial load and after navigation
+  
+  document.addEventListener("astro:page-load",() => {
+    menuStuff();
+  });
+
+  </script>
+
+
+<style>
+   
+  #menu-button{
+    display: none;
+  }
+  .wrapp {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 20;
+    margin-top: 1rem;
+  }
+
+  .navbar {
+    font-family: "OT Bulb Monoline";
+    width: 95%;
+    z-index: 20;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    text-transform: uppercase;
+    background-color: rgba(210, 210, 210, 0.5);
+    backdrop-filter: blur(10px);
+  }
+
+  .links {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    
+  }
+
+  .links.closed {
+    max-height: 0;
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    visibility: hidden;
+  }
+
+  .links.open {
+    max-height: 500px;
+    width: auto;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  a {
+    font-size: 0.8em;
+    padding: 0.1rem;
+    padding-right: 5em;
+    color: black;
+    text-decoration: none;
+    transition: 0.2s;
+   
+  }
+  a:hover{
+    background-color: rgb(0, 255, 0);
+    padding-inline: 3rem;
+  }
+
+  button {
+    font-size: 0.8rem;
+    transition: 0.2s;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding-inline: 0.4rem;
+  }
+
+  button:hover {
+    background-color: rgb(0, 255, 0);
+    padding-inline: 3rem;
+  }
+
+  @media (max-width: 640px) {
+    #menu-button{
+    display: block;
+    top:0
+  }
+  .esconder{
+    display: none;
+  }
+    .navbar {
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items:flex-start;
+      background-color: rgba(210, 210, 210, 0);
+      backdrop-filter: none;
+    }
+
+    .navbar *{
+      backdrop-filter: blur(50px);
+      font-size: 1rem;
+    }
+
+    .menu-button {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .links {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-content: flex-start;
+      width:0;
+      margin: 0;
+      visibility: hidden;
+      overflow: hidden;
+      max-height: 0;
+     
+    }
+
+    a {
+      
+      margin-bottom:0.1rem;
+      background-color: rgba(224, 224, 224, 0.3);
+      padding: 0;
+    }
+    button:hover {
+    background-color: rgb(0, 255, 0);
+    padding-inline: 1rem;
+  }
+  }
+</style>

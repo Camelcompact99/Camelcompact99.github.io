@@ -1,0 +1,217 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { getCollection } from "astro:content";
+import { useTranslations } from "../i18n/utils";
+import { Image } from "astro:assets";
+import Picture from "astro/components/Picture.astro";
+
+const works = await getCollection('works');
+
+const currentLang = Astro.currentLocale || 'es'
+const translateLabels = useTranslations(currentLang as "es" | "en" );
+
+const filteredWorks = works.filter((work: { slug: string; }) => work.slug.startsWith(`${currentLang}/`));
+
+const url = `${currentLang}/works`
+---
+<section id="grid" aria-label="Alejandro Vazquez Works">
+
+<h2>01_{translateLabels("works")}</h2>
+<p>{translateLabels("trabajos")}</p>
+
+
+<div class="grid-works" >   
+{
+
+    filteredWorks.map((work: { slug: string; data: any; })=>{
+        const{slug,data}=work;
+        const {title,year,image,material,seenIn,externalLink,estilo} = data; 
+        const estilar = estilo || 'gridElem';
+        const href = externalLink ||`/${slug.split("/")[0]}/works/${slug.split("/")[1]}`;
+        
+        return (
+        <div class={ estilar } 
+            data-title= { title }
+            data-material = { material }
+            data-anio ={year}
+            data-seenIn ={seenIn}
+           >
+
+
+            <a href={href}  target={externalLink ? "_blank" : "_self"} rel={externalLink ? "noopener noreferrer" : ""}>
+             <Image
+                 transition:name={`grid-${slug}`}
+                src={image} alt={title}  quality="mid" loading="lazy"   />
+
+                </a>
+             <div class="textover">
+                <span>{material}</span>
+                <span>{ title }</span>
+                <div class=" textoverabajo">
+                <span> {seenIn}</span>
+                <span>{year}</span>
+                </div>
+             </div>
+            </div>
+        )
+
+    })
+}
+
+</div>
+</section>
+
+<style>
+    h2{
+        font-size: 2.25rem;
+        font-weight: 600;
+        margin-bottom: 0px;
+        padding-bottom: 0px ;
+        text-transform: lowercase;
+    }
+    p{
+        padding-top: 0px;
+        margin-top: 0px;
+        margin-bottom: 3rem;
+        text-transform: lowercase;
+    }
+
+
+    #grid{
+        padding-top: 3em;
+    }
+    .grid-works{
+    font-family: "OT Bulb Monoline";
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    display: grid;
+    grid-template-columns:repeat(auto-fill,
+    minmax(650px,1fr)); 
+    grid-auto-rows:600px;
+    row-gap:40px;
+    column-gap: 20px; /* Espacio entre elementos */
+    justify-self: center ;
+    width: 100%;
+    grid-auto-flow: dense;
+   
+    }
+
+
+    #grid p{
+    margin-top: 0%;
+    }
+
+    .gridElem{
+     position: relative; 
+     
+    }
+
+    .horizontal {
+        position: relative; 
+       grid-column: span 2;
+     
+      
+    }
+    .vertical {
+        position: relative; 
+        grid-row: span 2 ;
+      
+    }
+
+
+   .textover {
+        position: absolute;
+        top: 0;
+        width: 100%;
+
+        height: 100%;
+        display: flex;
+        pointer-events: none;
+        justify-content: space-between; /* Espacia los elementos horizontalmente */
+        align-items: space-between; /* Espacia los elementos verticalmente */
+        }
+         .textoverabajo{
+            position: absolute;
+            bottom:0;
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+     span{
+        padding: 0.6rem;
+        color: white;
+        text-shadow: 3px .1px 5px black;
+     }
+    .grid-works  img{
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        background-color: lightgrey ; 
+        transition: 0.5s ease;  
+    }
+
+    .horizontal img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        background-color: lightgrey ; 
+        transition: 0.5s ease;  
+    }
+     .gridElem:hover img{
+            border-radius: 1.1rem; 
+            
+            scale:1.008;
+            border-radius: 10px;
+            background: linear-gradient(145deg, #373737, #2e2e2e);
+            box-shadow:  5px 10px 20px #787878,
+             -10px -10px 10px #989898; 
+        }
+        .vertical:hover img{
+            border-radius: 1.1rem; 
+            
+            scale:1.008;
+            border-radius: 10px;
+            background: linear-gradient(145deg, #373737, #2e2e2e);
+            box-shadow:  5px 10px 20px #787878,
+             -10px -10px 10px #989898; 
+        }  
+        .horizontal:hover img{
+            border-radius: 1.1rem; 
+            
+            scale:1.008;
+            border-radius: 10px;
+            background: linear-gradient(145deg, #373737, #2e2e2e);
+            box-shadow:  5px 10px 20px #787878,
+             -10px -10px 10px #989898; 
+        }
+
+    .menuWorks{
+        padding-bottom: 5rem;
+    }
+    .wrapperFlex{
+        width: 100%;
+        display: flex;
+        justify-content:0;
+        flex-wrap:wrap;
+        margin: 0 auto;
+        font-size: 1.1rem;  
+    }
+
+   
+
+    @media (max-width: 1500px) {
+    .grid-works{
+    grid-template-columns:repeat(auto-fill,
+    minmax(100%,1fr)); 
+    grid-auto-rows:auto;
+    }
+    .horizontal{
+    
+    grid-column: span 1;
+    }
+    .vertical{
+    grid-row: span 1;
+    }
+    }
+
+</style>
