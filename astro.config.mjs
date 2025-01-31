@@ -6,6 +6,11 @@ export default defineConfig({
    
     site: 'https://alejandro-vazquez.com',
     
+    vite: {
+        optimizeDeps: {
+          include: ['three']
+        }
+    },
 
     i18n:{
         defaultLocale:'es',
