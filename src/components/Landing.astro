@@ -1,25 +1,23 @@
 ---
 import { useTranslations } from "../i18n/utils";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import {initThreeScene} from "../client/tresde"
 
 const currentLang = Astro.currentLocale || 'es'
 const translateLabels = useTranslations(currentLang as "es" | "en" );
 
 ---
+<script>
+  import {initThreeScene} from "../client/tresde"
 
-<canvas class="webgl"></canvas>
-
-<script type="module">
-  
-  import { initThreeScene } from '/tresde.js';
-  // Ejecutar la inicialización en el primer render
   initThreeScene();
 
-  // Reejecutar Three.js después de una transición de vista
-  document.addEventListener('astro:after-swap', () => {
-    initThreeScene();
-  });
+  document.addEventListener('astro:after-swap',()=>{
+  initThreeScene();
+})
 </script>
+<canvas class="webgl"></canvas>
+
 
 <style>
   /* Contenedor para reservar espacio para el canvas */
