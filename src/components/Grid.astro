@@ -14,45 +14,47 @@ const filteredWorks = works.filter((work: { slug: string; }) => work.slug.starts
 
 const url = `${currentLang}/works`
 ---
-<section id="grid" aria-label="Alejandro Vazquez Works">
 
-<h2>01_{translateLabels("works")}</h2>
+<section id="grid"  aria-label="Alejandro Vazquez Works">
+<div class = "titulo">
+<h2>{translateLabels("works")}</h2>
 <p>{translateLabels("trabajos")}</p>
+</div>
+<div id="esoes" class="big"></div>
+<div id="lol" class="circulo-borroso enfocar"></div> 
+<div class= "bg enfocar"></div>
+<div  id="info-box" class="infobox"></div>
 
-
-<div class="grid-works" >   
+<div class="grid-works" >  
+    
 {
 
     filteredWorks.map((work: { slug: string; data: any; })=>{
         const{slug,data}=work;
         const {title,year,image,material,seenIn,externalLink,estilo} = data; 
-        const estilar = estilo || 'gridElem';
+       
         const href = externalLink ||`/${slug.split("/")[0]}/works/${slug.split("/")[1]}`;
         
         return (
-        <div class={ estilar } 
+        <div class= "element" 
             data-title= { title }
             data-material = { material }
             data-anio ={year}
-            data-seenIn ={seenIn}
-           >
-
-
+            data-seenIn ={seenIn}>
             <a href={href}  target={externalLink ? "_blank" : "_self"} rel={externalLink ? "noopener noreferrer" : ""}>
              <Image
                  transition:name={`grid-${slug}`}
-                src={image} alt={title}  quality="mid" loading="lazy"   />
-
+                src={image} alt={title}  quality="mid" loading="lazy"/>
                 </a>
              <div class="textover">
+                
+                <span class = "titulito">{ title }</span>
                 <span>{material}</span>
-                <span>{ title }</span>
-                <div class=" textoverabajo">
-                <span> {seenIn}</span>
                 <span>{year}</span>
-                </div>
+                <span class="institucion">{seenIn}</span>
              </div>
-            </div>
+         </div>
+           
         )
 
     })
@@ -62,156 +64,197 @@ const url = `${currentLang}/works`
 </section>
 
 <style>
+    #grid{
+        position: relative;
+        min-height: 100vh;
+    }
+    .titulo{
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding-top: 5rem;
+        z-index: 5;
+        line-height: 0.9;
+    }
+    .circulo-borroso {
+    width: 90%;
+    height: 50%;
+    background-color: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: blur(500px); /* Controla la cantidad de desenfoque */
+    transition: 0.6s ease-in-out; 
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+.big{
+    width: 100px;
+    height: 800px;
+    background-repeat: no-repeat;
+    opacity: 0;
+    border-radius: 30%;
+    background-size: contain; /* Muestra la imagen completa */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+    background-position: center;
+}
+    .bg{  
+    width: 100vw;
+    height: 100%;
+    background-color: rgba(30, 30, 30, 1);
+    z-index: -2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.8s ease-out; 
+    }
+    
+    
     h2{
         font-size: 2.25rem;
-        font-weight: 600;
         margin-bottom: 0px;
         padding-bottom: 0px ;
         text-transform: lowercase;
+        color: aliceblue;
     }
     p{
         padding-top: 0px;
         margin-top: 0px;
         margin-bottom: 3rem;
         text-transform: lowercase;
+        color: aliceblue;
     }
 
 
     #grid{
         padding-top: 3em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+       
     }
     .grid-works{
-    font-family: "OT Bulb Monoline";
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    display: grid;
-    grid-template-columns:repeat(auto-fill,
-    minmax(650px,1fr)); 
-    grid-auto-rows:600px;
-    row-gap:40px;
-    column-gap: 20px; /* Espacio entre elementos */
-    justify-self: center ;
-    width: 100%;
-    grid-auto-flow: dense;
-   
-    }
-
-
-    #grid p{
-    margin-top: 0%;
-    }
-
-    .gridElem{
-     position: relative; 
-     
-    }
-
-    .horizontal {
-        position: relative; 
-       grid-column: span 2;
-     
-      
-    }
-    .vertical {
-        position: relative; 
-        grid-row: span 2 ;
-      
-    }
-
-
-   .textover {
-        position: absolute;
-        top: 0;
-        width: 100%;
-
-        height: 100%;
+        opacity: 100%;
         display: flex;
-        pointer-events: none;
-        justify-content: space-between; /* Espacia los elementos horizontalmente */
-        align-items: space-between; /* Espacia los elementos verticalmente */
-        }
-         .textoverabajo{
-            position: absolute;
-            bottom:0;
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-        }
-     span{
-        padding: 0.6rem;
-        color: white;
-        text-shadow: 3px .1px 5px black;
-     }
-    .grid-works  img{
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-        background-color: lightgrey ; 
-        transition: 0.5s ease;  
+        flex-direction: row;
+        width: 90%;
+        align-self: center;
+        justify-self: center;
+        justify-content: center;
+        flex-wrap: wrap;
+       
     }
-
-    .horizontal img {
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-        background-color: lightgrey ; 
-        transition: 0.5s ease;  
-    }
-     .gridElem:hover img{
-            border-radius: 1.1rem; 
-            
-            scale:1.008;
-            border-radius: 10px;
-            background: linear-gradient(145deg, #373737, #2e2e2e);
-            box-shadow:  5px 10px 20px #787878,
-             -10px -10px 10px #989898; 
-        }
-        .vertical:hover img{
-            border-radius: 1.1rem; 
-            
-            scale:1.008;
-            border-radius: 10px;
-            background: linear-gradient(145deg, #373737, #2e2e2e);
-            box-shadow:  5px 10px 20px #787878,
-             -10px -10px 10px #989898; 
-        }  
-        .horizontal:hover img{
-            border-radius: 1.1rem; 
-            
-            scale:1.008;
-            border-radius: 10px;
-            background: linear-gradient(145deg, #373737, #2e2e2e);
-            box-shadow:  5px 10px 20px #787878,
-             -10px -10px 10px #989898; 
-        }
-
-    .menuWorks{
-        padding-bottom: 5rem;
-    }
-    .wrapperFlex{
-        width: 100%;
-        display: flex;
-        justify-content:0;
-        flex-wrap:wrap;
-        margin: 0 auto;
-        font-size: 1.1rem;  
-    }
-
-   
-
-    @media (max-width: 1500px) {
-    .grid-works{
-    grid-template-columns:repeat(auto-fill,
-    minmax(100%,1fr)); 
-    grid-auto-rows:auto;
-    }
-    .horizontal{
+    .element{
+        max-width: 100%;
+        padding: 3px;
+        transition: 1s ;
+        max-height: 100%;
+        filter: drop-shadow(0 0 0.75rem rgb(0, 0, 0));
+     
     
-    grid-column: span 1;
     }
-    .vertical{
-    grid-row: span 1;
+    .element img {
+        width: 150px;
+        max-width: 100%;
+        height: auto;
     }
+    .textover {
+  
+    display: none;
+    }
+    #info-box {
+        position: absolute;
+        z-index:20;
+        color:rgba(224, 224, 224, 1);
+        padding: 10px;
+        line-height: 0.9;
+        font-size: 0.9rem;
+        display: none; /* Oculto por defecto */
+        z-index: 10;
+      
+    }
+    .infobox strong{
+        font-weight: 400;
+    }
+    .infobox span{
+        text-transform: capitalize;
+        font-family: OT Bulb Monoline;
+    }
+    
+    @media (max-width: 1030px){
+        #grid{
+            width:100%
+        }
+        .grid-works{
+            flex-direction: column;
+            width: 100%;
+            max-width: 100%;
+
+        }
+        .titulo{
+            position: relative;
+            width: 100%;
+            font-size: 0.9rem;
+           
+
+        }
+       
+        .element{
+            width: 100%;
+            padding: 0%;
+            position: relative;
+        }
+        
+        .element img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        padding-inline: 0;
+        z-index: -1;
+    }
+        .textover{
+            display:flex;
+            z-index: 2;
+            font-size: 0.7rem;
+            align-items: flex-end;
+            font-family: OT Bulb Monoline;
+            text-transform: uppercase;
+            color: white;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding-bottom: 1rem
+        }
+        .titulito{
+            display: inline;
+            font-family:PP Neue Montreal Medium;
+            text-transform: capitalize;
+            width: 100%;
+            margin: 0%;
+            padding: 0;
+            font-size: 2rem;
+            line-height: 1.6rem;
+            padding-block: 0.5rem;
+        }
+        .institucion{
+            width: 100%;
+        }
+        .infobox{
+            display none
+
+        }
     }
 
 </style>
+
+
+

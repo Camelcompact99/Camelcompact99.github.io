@@ -32,6 +32,9 @@ const { title } = Astro.props;
 	@font-face{
 		font-family: PP Neue Montreal Medium ;
 		src: url('/fonts/PPNeueMontreal-Medium.woff2')format('woff2') ;
+		font-style: normal;
+		font-weight: 400;
+		line-height: normal;
 
 	}
 	@font-face{
@@ -59,8 +62,8 @@ const { title } = Astro.props;
 		color: #000;
 		font-size: 1rem;
 		font-style: normal;
-		font-weight: 500;
-		line-height: normal;
+		
+	
 		background: rgba(224, 224, 224, 1);
 		max-width: 100vw;
 	}
@@ -100,6 +103,7 @@ const { title } = Astro.props;
 		h2{
             font-size: 5rem;
 			margin-bottom:0;
+			font-weight: 400;
         }
 
 		@media (max-width: 640px) {
@@ -124,3 +128,123 @@ const { title } = Astro.props;
 		
 </style>
 
+<script is:inline>
+
+    document.addEventListener("astro:page-load", () => {
+       
+        const hiddenElements = document.querySelectorAll('.enfocar');
+        const elements = document.querySelectorAll(".element");
+        const textos = document.querySelectorAll(".textover");
+        const preview = document.getElementById("lol");
+        const big = document.getElementById("esoes");
+        const infoBox = document.getElementById("info-box");
+
+
+        document.addEventListener('mousemove', (event) => {
+        const x = event.clientX;
+        const y = event.clientY;
+
+      // Actualizar la posición del div
+      big.style.left = `${x}px`;  // Para centrar el div en el puntero
+      big.style.top = `${y}px`; 
+    });
+    
+
+
+    if (window.matchMedia('(min-width: 1030px)').matches) {
+  const observador = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const ratio = entry.intersectionRatio; // Cuánto está siendo visible
+
+      if (ratio > 0.2) {
+        entry.target.style.opacity = 1; // Visible completamente
+      } else {
+        entry.target.style.opacity = 0; // Oculto
+      }
+    });
+  }, {
+    root: null, // Usa el viewport como referencia
+    threshold: Array.from({length: 11}, (_, i) => i * 0.1) // [0, 0.1, ..., 1] para pantallas grandes
+  });
+
+  hiddenElements.forEach((el) => observador.observe(el));
+} else {
+  const observador = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const ratio = entry.intersectionRatio; // Cuánto está siendo visible
+
+      if (ratio > 0.1) {
+        entry.target.style.opacity = 1; // Visible completamente
+      } else {
+        entry.target.style.opacity = 0; // Oculto
+      }
+    });
+  }, {
+    root: null, // Usa el viewport como referencia
+    threshold: [0.1] // Solo 0.1 para pantallas pequeñas
+  });
+
+  hiddenElements.forEach((el) => observador.observe(el));
+}
+
+
+
+        elements.forEach(element => {
+         if (window.matchMedia('(min-width: 1030px)').matches) {     
+        element.addEventListener("mouseenter", () => {
+        const img = element.querySelector("img");
+        const title = element.getAttribute("data-title");
+         const material = element.getAttribute("data-material");
+         const year = element.getAttribute("data-anio");
+        const seenIn = element.getAttribute("data-seenIn");
+        infoBox.innerHTML = `
+                    <strong>${title}</strong><br>
+                    <span>${material}</span><br>
+                    <span>${year}</span><br>
+                    <span> ${seenIn}</span>
+                `;
+        infoBox.style.display = "block"; 
+        infoBox.style.position= "absolute"
+        infoBox.style.bottom= "10rem"
+        infoBox.style.left = "0"
+         
+
+        infoBox.style.fontSize= "1rem"
+        infoBox.style.fontSize
+        
+
+       
+        if (img) {
+        big.style.backgroundImage = `url(${img.src})`;
+        big.style.opacity = '1'; 
+        big.style.width = '700px'
+        big.style.borderRadius = '1%'
+        preview.style.backgroundImage = `url(${img.src})`;
+        preview.style.backgroundColor=" ";
+        preview.style.filter = 'blur(100px)';
+        preview.style.height = '70%'
+          preview.style.opacity = '70%'
+        preview.style.borderRadius = '30%';
+        console.log('in')
+
+    }
+  });
+ 
+  element.addEventListener("mouseleave", () => {
+    infoBox.style.display = "none";
+    big.style.backgroundImage = "";
+    big.style.width = "0";
+    preview.style.backgroundImage = "";
+    preview.style.backgroundColor="black";
+    preview.style.filter = 'blur(500px)';
+    preview.style.borderRadius = '50%';
+    console.log('out')
+  });
+    }
+        
+});
+
+
+    });
+
+</script>

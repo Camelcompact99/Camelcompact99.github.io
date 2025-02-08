@@ -5,25 +5,40 @@ const currentLang = Astro.currentLocale || 'es'
 const translateLabels = useTranslations(currentLang as "es" | "en" );
 ---
 <div class="wrapperfondo" >
-    <div class = "fondo"> <img src="/images/bg.webp" alt=""></div>
+    <div class = "fondo enfocar"> <img src="/images/bg.webp" alt=""></div>
 </div>
 <section aria-label=" alejandro vázquez contact" id="contact">
-   
+    <div id ="mailalert"> {translateLabels('alertaemail')}</div>
     <h2>{translateLabels('contact')}</h2>
-    
+    <span class="opentowork"> {translateLabels('open')}</span>
     <ul>
     <li class="contactList" id="copyLink"><a href="#"></a>Email</a></li>
     <li class="contactList"><a href="https://www.instagram.com/camelcompact99/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
     <li class="contactList"><a href="https://www.linkedin.com/in/alejandro-vazquez-a9b7162a4/">Linkedin</a></li>
     <li class="contactList"><a href="https://www.tiktok.com/@camelcompact99">Tiktok</a></li>
     </ul>
-    <span class="opentowork"> {translateLabels('open')}</span>
+    
   
 </section>
 
 <style>
     .wrapperfondo{
         position: relative;
+        
+    }
+    #mailalert{
+        position: absolute;
+        z-index: 2;
+        left:0;
+        margin-top: 20rem;
+        background-color: rgb(0,255,0);
+        padding:1rem ;
+        font-size:1.2rem;
+        color: black ;
+        transition: 0.6s ease-in-out; 
+        
+        opacity: 0;
+
     }
     #contact{
         margin: auto;
@@ -31,20 +46,19 @@ const translateLabels = useTranslations(currentLang as "es" | "en" );
 		width: 95%;
 		max-width: calc(100% - 2rem);
         position: relative;
-        padding-top: 20rem;
         height: 80vh;
         padding-block: 3rem;
         padding-bottom: 0rem;
         display:flex;
         flex-direction: column;
+        justify-content: center;
         color:white;
         
      
     }
     #contact h2{
-        margin-top: 15rem;
+      
         font-size: 2.25rem;
-        font-weight: 600;
         margin-bottom: 0px;
         padding-bottom: 0px ;
         text-transform: lowercase;
@@ -55,10 +69,10 @@ const translateLabels = useTranslations(currentLang as "es" | "en" );
         display: flex;
         flex-wrap: wrap;
         list-style: none;
-       font-size: 1.5em;
-       width: 100%;
-       justify-content: space-between;
-       padding: 0%;
+        font-size: 1.2rem;
+        flex-direction : column;
+        padding: 0;
+        line-height: 0.9;
        font-family:"OT Bulb Monoline";
        
        text-transform: uppercase;
@@ -68,18 +82,16 @@ const translateLabels = useTranslations(currentLang as "es" | "en" );
     }
     #contact li {
         
-        padding-inline: 20px;
-        padding-block: 6px;
+       
+       
         margin-block: 7px;
       
         transition: 0.2s ease-in-out;
         text-shadow: 1px 1px 2px black;
     }
     #contact li:hover{
-        transform:scale(1.1);
         text-shadow: 5px 5px 20px rgb(0, 255, 0);
-        padding-block: 6px;
-        padding-inline: 30px;
+       
         
     }
     #contact a{
@@ -88,11 +100,12 @@ const translateLabels = useTranslations(currentLang as "es" | "en" );
        
     }
     .opentowork{
-        align-self: center;
+
         text-shadow: 1px 1px 2px black;
     }
 
     .fondo{
+        transition: 0.5s;
         height: 100vh;
         position :absolute;
         top: 0;
@@ -122,19 +135,24 @@ const translateLabels = useTranslations(currentLang as "es" | "en" );
 </style>
 
 <script type="module">
-    document.addEventListener("astro:page-load",()=>{
-       
-        document.getElementById('copyLink')?.addEventListener('click',()=>{
-          
-            const textToCopy = "vazquez.tome.alejandro@gmail.com"
+    document.addEventListener("astro:page-load", () => {
+        document.getElementById("copyLink")?.addEventListener("click", () => {
+            const textToCopy = "vazquez.tome.alejandro@gmail.com";
             navigator.clipboard.writeText(textToCopy)
-        .then(() => {
-           
-            alert('mail copied on yout clipboard: '+  textToCopy); // Opcional: Mostrar un mensaje al usuario
-        })
-        .catch(err => {
-            console.error('Error al copiar el texto: ', err);
+                .then(() => {
+                    const alertDiv = document.getElementById("mailalert");
+                    if (alertDiv) {
+                        
+                        alertDiv.style.opacity = "100";
+
+                        setTimeout(() => {
+                            alertDiv.style.opacity = "0";
+                        }, 2000);
+                    }
+                })
+                .catch(err => {
+                    console.error("Error al copiar el texto: ", err);
+                });
         });
-        })
-    })
+    });
 </script>

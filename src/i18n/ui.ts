@@ -24,7 +24,8 @@
         'visuales': 'Visuales AV',
         'prototipado': 'Prototipado y fabricación Digital',
         'foto': 'Edicion de foto y video',
-        'intro': 'Hola soy Alex soy un artista y creativo de Vigo (España), me gusta hacer cosas con todo tipo de medios, sobre todo digitales, pero sobre todo me gusta hacer cosas que no sirven para nada '
+        'intro': 'Hola soy Alex soy un artista y creativo de Vigo (España), me gusta hacer cosas con todo tipo de medios, sobre todo digitales, pero sobre todo me gusta hacer cosas que no sirven para nada ',
+        'alertaemail': 'mi mail vazquez.tome.alejandro@gmail se ha copiado en tu portapapeles ;)'
     },
     en:{
         'navbar_works': 'se all my works',
@@ -45,8 +46,8 @@
         'visuales': 'AV Visuals',
         'prototipado': 'Prototiping and Digital Manufacturing',
         'foto': 'Photo and Video Editing',
-        'intro': ""
-
+        'intro': "Hi I'm Alex I'm an artist and creative from Vigo (Spain), I like to do things with all kinds of media, especially digital, but above all I like to do useless stuff.",
+        'alertaemail': 'my email vazquez.tome.alejandro@gmail.com was copied to your clipboard ;)'
 
     },
 }

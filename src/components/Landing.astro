@@ -38,7 +38,7 @@ const translateLabels = useTranslations(currentLang as "es" | "en" );
     width: 100%;
     max-width: 100vw; /* Escala el canvas para ocupar todo el contenedor */
     height: 100%; /* Escala el canvas verticalmente */
-    z-index: -1; /* Coloca el canvas detrás de otros elementos */
+    z-index: 5; /* Coloca el canvas detrás de otros elementos */
     outline: none;
   }
 
@@ -62,21 +62,25 @@ const translateLabels = useTranslations(currentLang as "es" | "en" );
   }
   .textos {
     position: absolute;
-    bottom: 30%;
+    top: 50%;
     left: 2.5%;
+    transform: translateY(-50%);
     margin: 0;
-    font-size: 1rem;
+    text-align: justify;
+    transition: 0.6s ease-in-out;
+    z-index:-20;
     padding-right: 0rem;
+    transition: 0.5s;
+    line-height: 0.95;
     color: black;
-    max-width:600px;
+    font-size: 5rem;
+    max-width: 90%;
     z-index: 1; /* Asegura que el texto esté encima del fondo */
     transition:0.3s ;
     overflow: hidden; /* Oculta el texto fuera del contenedor */
     white-space: nowrap; /* Evita que el texto se divida en varias líneas */
     animation: mostrarTexto 1s, ease-out, forwards;
     text-wrap: wrap;
-    background-color:rgba(210, 210, 210, 0.8);
-    backdrop-filter: blur(10px);
     padding: 1rem;
     
 }
@@ -90,8 +94,8 @@ padding-right: 3rem;
 
 @media (max-width: 1500px) {
   .textos{
-    max-width:200px;
-    font-size: 0.9rem;
+    
+    font-size: 3.4rem;
   }
  
 }
@@ -101,7 +105,7 @@ padding-right: 3rem;
  <html>
   <body>
 <div class="canvas-container" id = "landing">
-  <div class ="textos">{translateLabels('intro')}</div>
+  <div class ="textos enfocar">{translateLabels('intro')}</div>
   <canvas class="webgl"></canvas>
 </div>
 </body>
