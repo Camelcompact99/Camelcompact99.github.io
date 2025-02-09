@@ -1,7 +1,7 @@
 ---
 name: 'cordero' 
 title: 'Untitled(Ritual)'
-year: '2021'
+year: '2024'
 image: '../../../images/a.webp'
 material: 'live set'
 seenIn: 'PLUTO VALENCIA'
