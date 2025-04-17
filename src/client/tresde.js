@@ -62,7 +62,7 @@
 
             huesoCabeza = modelo.children[0].children[2].children[0].children[0].children[0].children[0].children[0];
 
-            console.log(huesoCabeza)
+           
 
         
             
