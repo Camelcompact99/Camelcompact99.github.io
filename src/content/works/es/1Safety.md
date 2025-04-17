@@ -7,6 +7,8 @@ material: '3d'
 seenIn: 'post digital landscapes'
 estilo: 'horizontal' 
 ---
+<h3><a href= "https://www.youtube.com/watch?v=5y4j1W-BjA4&ab_channel=AlejandroVazquez"> Video Completo</a><h3>
+
 
 Es muy complicado encontrarnos en este mundo tan veloz, a veces no parecemos encontrarnos en nada, otras nos encontramos en todo a la vez, a veces necesitamos un error, algo que nos detenga lo suficiente para ser capaces de ver el paisaje, nuestro nuestro propio paisaje emocional. “Lluvia,Vapor,Velocidad” de Turner parece hoy una obra providencial de cómo los sucesivos avances tecnológicos han diluido el espacio real cómo brochazos sueltos sobre un lienzo.
 

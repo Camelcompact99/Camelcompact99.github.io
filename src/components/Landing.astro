@@ -94,10 +94,12 @@ padding-right: 3rem;
 
 @media (max-width: 1500px) {
   .textos{
-    font-size: 2.2rem;
-    flex-wrap: wrap;
-    overflow: hidden;
-    max-width: 100%;
+    width: 80vw;
+    top: 45%;
+    font-size: 2.5rem;
+    white-space: normal; /* Permite que el texto se divida en varias líneas */
+    word-wrap: break-word; /* Rompe las palabras largas si es necesario */
+    overflow-wrap: break-word;
   }
  
 }

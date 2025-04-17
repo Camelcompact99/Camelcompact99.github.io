@@ -13,7 +13,11 @@
         'curriculum':'SOBRE MI',
         'contact':'CONTACTAME',
         'open': 'estoy abierto a comisiones y trabajos fijos' , 
-        'bio1':'Nací en el año 1999, lo que hace que toda mi perspectiva vital esté ligada a procesos de desindustrialización y digitalización del mundo.En el espacio cambiante de los últimos 25 años surgen preguntas sobre nuestra relación con nosotros mismos, las imágenes, nuestro entorno y la tecnología, y precisamente en esas cuestiones es donde se enmarca mi producción artística. Para plantear y trabajar alrededor de estas preguntas me gusta acercarme desde diferentes lugares conceptuales y medios técnicos. Esto dota a mi producción de mucha variedad y riqueza formal, haciendo que mis obras se materialicen en formas diversas orbitando la imágen,la pintura, la escultura, la instalación y los “nuevos medios”.',
+        'bio1':`Soy Alejandro Vázquez, artista multimedia de Vigo (España). Mi trabajo explora cómo se construyen nuestras relaciones con nosotros mismos y con el mundo en la era digital. Para ello, creo piezas que observan y alteran las dinámicas entre los actores principales dentro de los sistemas hegemónicos.
+
+        Mi práctica artística se fundamenta más en un enfoque conceptual que material, buscando generar preguntas sobre la interconexión entre los sistemas de la era de la información, nuestra humanidad y el mundo natural. Para establecer estas relaciones, recurro tanto a poéticas que resignifican símbolos y usos comunes como a la ironía, desnudando el componente absurdo de ciertos aspectos de nuestra contemporaneidad.
+
+        A través de mi trabajo, busco observar y desentrañar el funcionamiento de los productos de síntesis que nos rodean en un mundo cada vez más atravesado por sistemas complejos. ¿Cómo se configura la fuerza de nuestro deseo en la vorágine de un capitalismo que parece agotarse? ¿De qué manera operan nuestros afectos en una realidad mediatizada por pantallas? Exploro estas tensiones no como conceptos cerrados, sino como flujos en constante transformación, donde la realidad no deja de reconfigurarse.`,
         'trabajos': 'Una selección de mis mejores trabajos artisticos',
         'premios': 'premios,reconocimientos y convocatorias',
         'estudios':'estudios',
@@ -35,7 +39,16 @@
         'curriculum':'ABOUT ME',
         'contact':'CONTACT ME',
         'open': 'open to work //comisions open',
-        'bio1': 'I was born in 1999, which means that my entire life perspective is linked to processes of deindustrialization and digitalization of the world, and in the changing space of the last 25 years questions arise about our relationship with ourselves, images, our environment and technology, and it is precisely in these issues where my artistic production is framed. To raise and work around these questions I like to approach from different conceptual places and technical means. This gives my production a lot of variety and formal richness, making my works materialize in various forms orbiting the image, painting, sculpture, installation and “new media”.',
+        'bio1':`
+I am Alejandro Vázquez, a multimedia artist from Vigo, Spain. My work explores how our relationships with ourselves and the world are constructed in the digital age. To do this, I create pieces that observe and alter the dynamics between the main actors within hegemonic systems.
+
+
+  
+My artistic practice is based more on a conceptual than a material approach, seeking to raise questions about the interconnection between information-age systems, our humanity, and the natural world. To establish these relationships, I employ poetics that re-signify common symbols and uses, as well as irony to expose the absurdity of certain aspects of our contemporary reality.  
+
+
+  
+As our environment becomes more and more shaped by complex systems, I aim to decipher how the synthetic products that surround us operate . How is our desire's force arranged inside the whirlpool of capitalism's apparent exhaustion in a seemingly endless system? How do our relationships had changed in a screen-mediated world? My work tries to examine those kind of conflicts in a world where reality dont stop re-configuring itself`,
         'trabajos': 'A  brief selection of my best artworks',
         'premios': 'awards and recognitions',
         'estudios': 'studies',
