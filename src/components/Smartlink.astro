@@ -1,0 +1,22 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+interface Props {
+  href: string;
+  label?: string;
+  external?: boolean;
+}
+
+const { href, label = href } = Astro.props;
+const isExternal = /^https?:\/\//.test(href);
+const finalHref = isExternal ? href : getRelativeLocaleUrl(href);
+---
+
+<a
+  href={finalHref}
+  target={isExternal ? "_blank" : "_self"}
+  rel={isExternal ? "noopener noreferrer" : undefined}
+  {...(isExternal ? { 'data-router-ignore': true } : {})}
+>
+  {label}
+</a>
