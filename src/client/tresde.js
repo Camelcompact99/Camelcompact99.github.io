@@ -61,10 +61,6 @@
             escena.add(modelo);
 
             huesoCabeza = modelo.children[0].children[2].children[0].children[0].children[0].children[0].children[0];
-
-           
-
-        
             
             mixer = new THREE.AnimationMixer(modelo);
             const caer = gltf.animations[1];
@@ -98,7 +94,7 @@
     );
 
     function onClick(event) {
-        event.preventDefault();
+       
 
         if (!modelo) {
             console.error("El modelo aún no ha sido cargado.");
