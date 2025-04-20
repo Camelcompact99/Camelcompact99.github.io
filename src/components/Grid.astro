@@ -68,18 +68,21 @@ const url = `${currentLang}/works`
 
     .grid-works{
         display: grid;
-        gap: 10px;
-        grid-template-columns: repeat(2,1fr);
-        grid-auto-rows: 80vh;
+        gap: 15px;
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+
+        grid-auto-rows: 75vh;
         grid-auto-flow: dense;
     }
     .grid-works img{
         max-width: 100%;
-        max-height: 85%;
+        height: auto;
+        max-height: 80%;
         object-fit: cover;
     }
+   
     .grid-works h2{
-        font-size: 2rem;
+        font-size: 1.6rem;
         margin: 0%;
         padding: 0;
         line-height:1;
@@ -88,7 +91,10 @@ const url = `${currentLang}/works`
         margin: 0;
         padding: 0;
         line-height: 1;
+        font-family: PP Neue Montreal Mono;
         font-weight: 400;
+        font-size: 0.8rem;
+        text-transform:uppercase;
    }
    #grid a { 
         text-decoration: none;
