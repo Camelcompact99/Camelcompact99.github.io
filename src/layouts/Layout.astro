@@ -41,6 +41,12 @@ const { title } = Astro.props;
 		font-family: OT Bulb Monoline;
 		src: url('/fonts/OTBulbMonoline-500.woff2')format('woff2')
 	}
+
+	@font-face{
+		font-family: PP Neue Montreal Mono;
+		src: url('/fonts/PPNeueMontrealMono-Medium.woff2')format('woff2')
+	}
+
 	::-webkit-scrollbar{
 		display: none;
 	}
@@ -58,7 +64,7 @@ const { title } = Astro.props;
 		margin:0; 
 		padding:0%;
 		overflow-x: hidden;
-		font-family: "PP Neue Montreal Medium"; 
+		font-family: "PP Neue Montreal Medium",Arial, Helvetica, sans-serif; 
 		color: #000;
 		font-size: 1rem;
 		font-style: normal;
