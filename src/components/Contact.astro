@@ -1,146 +1,141 @@
 ---
-import { useTranslations } from "../i18n/utils"
+import { useTranslations } from "../i18n/utils";
 
-const currentLang = Astro.currentLocale || 'es'
-const translateLabels = useTranslations(currentLang as "es" | "en" );
+const currentLang = Astro.currentLocale || "es";
+const translateLabels = useTranslations(currentLang as "es" | "en");
 ---
-<div class="wrapperfondo" >
-    <div class = "fondo enfocar"> <img src="/images/bg.webp" alt=""></div>
-</div>
+
 <section aria-label=" alejandro vázquez contact" id="contact">
-    <div id ="mailalert"> {translateLabels('alertaemail')}</div>
-    <h2>{translateLabels('contact')}</h2>
-    <span class="opentowork"> {translateLabels('open')}</span>
-    <ul>
-    <li class="contactList" id="copyLink"><a href="#"></a>Email</a></li>
-    <li class="contactList"><a href="https://www.instagram.com/camelcompact99/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-    <li class="contactList"><a href="https://www.linkedin.com/in/alejandro-vazquez-a9b7162a4/">Linkedin</a></li>
-    <li class="contactList"><a href="https://www.tiktok.com/@camelcompact99">Tiktok</a></li>
-    </ul>
-    
-  
+    <div class="contact-background"></div>
+    <div id="mailalert">{translateLabels("alertaemail")}</div>
+    <div class="contacto">
+        <ul>
+            <li class="contactList" id="copyLink"><a href="#"></a>Email</li>
+        
+        <li class="contactList">
+            <a
+                href="https://www.instagram.com/camelcompact99/"
+                target="_blank"
+                rel="noopener noreferrer">Instagram</a>
+        </li>
+        <li class="contactList">
+            <a href="https://www.linkedin.com/in/alejandro-vazquez-a9b7162a4/"
+                >Linkedin</a>
+        </li>
+        <li class="contactList">
+            <a href="https://www.tiktok.com/@camelcompact99">Tiktok</a>
+        </li>
+        </ul>
+    </div>
 </section>
 
 <style>
-    .wrapperfondo{
-        position: relative;
-        
-    }
-    #mailalert{
-        position: absolute;
-        z-index: 2;
-        left:0;
-        margin-top: 20rem;
-        background-color: rgb(0,255,0);
-        padding:1rem ;
-        font-size:1.2rem;
-        color: black ;
-        transition: 0.6s ease-in-out; 
-        
-        opacity: 0;
-
-    }
-    #contact{
-        margin: auto;
-		padding: 1rem;
-		width: 95%;
-		max-width: calc(100% - 2rem);
-        position: relative;
-        height: 80vh;
-        padding-block: 3rem;
-        padding-bottom: 0rem;
-        display:flex;
-        flex-direction: column;
-        justify-content: center;
-        color:white;
-        
-     
-    }
-    #contact h2{
-        margin-bottom: 0px;
-        padding-bottom: 0px ;
-        text-transform: lowercase;
-        margin-bottom: 0%;
-        text-shadow: 1px 1px 2px black;
-    }
-    #contact ul{
-        display: flex;
-        flex-wrap: wrap;
-        list-style: none;
-        font-size: 1.2rem;
-        flex-direction : column;
-        padding: 0;
-        line-height: 0.9;
-       font-family:"OT Bulb Monoline";
-       
-       text-transform: uppercase;
-      
-       
-
-    }
-    #contact li {
-        
-       
-       
-        margin-block: 7px;
-      
-        transition: 0.2s ease-in-out;
-        text-shadow: 1px 1px 2px black;
-    }
-    #contact li:hover{
-        text-shadow: 5px 5px 20px rgb(0, 255, 0);
-       
-        
-    }
-    #contact a{
-        color:white;
-       
-       
-    }
-    .opentowork{
-
-        text-shadow: 1px 1px 2px black;
-    }
-
-    .fondo{
-        transition: 0.5s;
+    #contact {
         height: 100vh;
-        position :absolute;
-        top: 0;
-        width: 100vw;
-        background-color:black ;
-        
-        z-index: -2;
-        overscroll-behavior-block: contain;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
     }
-    .fondo img{
+
+    .contact-background {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        background-image: url("/images/bg.webp");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0;
+        transform: scale(1.1);
+        transition:
+            opacity 1.2s ease-out,
+            transform 1.2s ease-out;
+        z-index: 0;
     }
-    @media (max-width: 640px) {
-        #contact ul{
-            flex-direction: column;
-		}
-        #contact h2{
-            margin-top: 20px;
-        }
+
+    .contact-background::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1;
     }
 
+    .contact-background.visible {
+        opacity: 1;
+        transform: scale(1);
+    }
 
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .contactList a {
+        text-decoration: none;
+        color: white;
+        font-size: 14px;
+        text-shadow: 2px 2px 5px black;
+    }
+    .contactList a:hover {
+        color: rgb(0, 255, 0);
+        transition: 0.6s ease-in-out;
+    }
+    #copyLink {
+        font-size: 14px;
+        color: rgb(255, 255, 255);
+        cursor: pointer;
+        text-shadow: 2px 2px 5px black;
+    }
 
+    #mailalert {
+        position: absolute;
+        z-index: 3;
+        left: 0;
+        margin-top: 20rem;
+        background-color: rgb(0, 255, 0);
+        padding: 1rem;
+        font-size: 1.2rem;
+        color: black;
+        transition: 0.6s ease-in-out;
+        opacity: 0;
+    }
 
+    h2 {
+        margin: 0;
+        font-size: 20px;
+        line-height: 20px;
+        text-shadow: 2px 2px 5px black;
+        color: white;
+    }
+    .contacto {
+        position: relative;
+        display: flex;
+        z-index: 2;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        max-width: calc(100% - 2rem);
+        width: 95%;
+        gap: 20px;
+    }
 </style>
 
 <script type="module">
     document.addEventListener("astro:page-load", () => {
+        // Email copy functionality
         document.getElementById("copyLink")?.addEventListener("click", () => {
             const textToCopy = "vazquez.tome.alejandro@gmail.com";
-            navigator.clipboard.writeText(textToCopy)
+            navigator.clipboard
+                .writeText(textToCopy)
                 .then(() => {
                     const alertDiv = document.getElementById("mailalert");
                     if (alertDiv) {
-                        
                         alertDiv.style.opacity = "100";
 
                         setTimeout(() => {
@@ -148,9 +143,30 @@ const translateLabels = useTranslations(currentLang as "es" | "en" );
                         }, 2000);
                     }
                 })
-                .catch(err => {
+                .catch((err) => {
                     console.error("Error al copiar el texto: ", err);
                 });
         });
+
+        // Background animation on scroll
+        const contactSection = document.getElementById("contact");
+        const contactBackground = document.querySelector(".contact-background");
+
+        if (contactSection && contactBackground) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            contactBackground.classList.add("visible");
+                        }
+                    });
+                },
+                {
+                    threshold: 0.2, // Trigger when 20% of the section is visible
+                },
+            );
+
+            observer.observe(contactSection);
+        }
     });
 </script>

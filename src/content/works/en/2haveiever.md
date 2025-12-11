@@ -3,7 +3,8 @@ name: 'haveiever'
 title: 'Have i ever met u in real life or r you just content'
 year: '2021'
 image: '../../../images/haveiever.webp'
-material: '3d'
+art: true
+material: 'Photography 3D sculpting Photoshop Installation Design'
 seenIn: 'final deegree thesis'
 ---
 <h3>Why build a space of anonymity about ourselves?</h3>

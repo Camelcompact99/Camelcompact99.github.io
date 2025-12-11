@@ -3,8 +3,10 @@ name: 'haveiever'
 title: 'Have i ever met u in real life or r you just content'
 year: '2021'
 image: '../../../images/haveiever.webp'
-material: '3d'
-seenIn: 'trabajo final de grado'
+material: 'Diseño 3D,Edición de fotografía'
+art: true
+type: 'art'
+seenIn: 'Trabajo Final de Grado'
 ---
 <h3>¿Por qué construir un espacio de anonimato sobre nosotros mismos? </h3>
 

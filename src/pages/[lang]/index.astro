@@ -1,0 +1,47 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Grid from "../../components/Grid.astro";
+import Curriculum from "../../components/Curriculum.astro";
+import Contact from "../../components/Contact.astro";
+import Landing from "../../components/Landing.astro";
+
+const currentLang = Astro.currentLocale || "es";
+
+export async function getStaticPaths() {
+	return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
+}
+---
+
+<Layout
+	title={currentLang === "es"
+		? "Alejandro Vázquez - Artista y Director Creativo | Portfolio"
+		: "Alejandro Vazquez - Artist & Creative Director | Portfolio"}
+>
+	<Navbar />
+	<Landing />
+	<main></main>
+	<Grid />
+	<main><Curriculum /></main>
+	<Contact />
+</Layout>
+
+<style>
+	main {
+		padding: 2rem;
+		width: 95%;
+		max-width: calc(100% - 2rem);
+		color: black;
+		line-height: 1.6;
+	}
+
+	@media (max-width: 768px) {
+		main {
+			padding: 1rem;
+			width: 95%;
+			max-width: calc(100% - 2rem);
+			color: black;
+			line-height: 1.6;
+		}
+	}
+</style>

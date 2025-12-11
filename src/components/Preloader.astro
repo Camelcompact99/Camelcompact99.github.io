@@ -1,0 +1,93 @@
+---
+import { useTranslations } from "../i18n/utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
+const currentLang = Astro.currentLocale || "es";
+const translateLabels = useTranslations(currentLang as "es" | "en");
+---
+
+<div id="preloader">
+    <div class="loader-content">
+        <div class="loader">
+            <h1>{translateLabels("intro")}</h1>
+        </div>
+    </div>
+</div>
+
+<script>
+    const preloader = document.getElementById("preloader");
+
+    // Check if we've already shown the preloader in this session
+    if (sessionStorage.getItem("preloaderShown")) {
+        if (preloader) {
+            preloader.style.display = "none";
+        }
+    }
+
+    const hidePreloader = () => {
+        if (
+            preloader &&
+            preloader.style.display !== "none" &&
+            !preloader.classList.contains("fade-out")
+        ) {
+            preloader.classList.add("fade-out");
+            setTimeout(() => {
+                preloader.style.display = "none";
+                sessionStorage.setItem("preloaderShown", "true");
+            }, 1000); // Match transition duration
+        } else if (preloader && preloader.style.display !== "none") {
+            // Ensure flag is set even if we are already fading out
+            sessionStorage.setItem("preloaderShown", "true");
+        }
+    };
+
+    // Listen for the custom event from Logo3D
+
+    window.addEventListener("logo-3d-loaded", () => {
+        hidePreloader();
+    });
+
+    // Fallback: Hide after 5 seconds if something goes wrong
+    setTimeout(() => {
+        hidePreloader();
+    }, 5000);
+</script>
+
+<style>
+    #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #f3f3f3; /* Or match your site's bg color */
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 1s ease-in-out;
+    }
+
+    .fade-out {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .loader {
+        text-align: center;
+        color: #333;
+    }
+    .loader h1 {
+        all: unset;
+        font-size: 14px;
+        animation: spin 5s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            opacity: 100%;
+        }
+        100% {
+            opacity: 0%;
+        }
+    }
+</style>

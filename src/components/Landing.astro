@@ -1,114 +1,101 @@
 ---
+import { getCollection } from "astro:content";
+import Logo3D from "../components/jsx/Logo3D.jsx";
 import { useTranslations } from "../i18n/utils";
-import { getRelativeLocaleUrl } from "astro:i18n";
-import {initThreeScene} from "../client/tresde"
+const works = await getCollection("works");
+const currentLang = Astro.currentLocale || "es";
+const translateLabels = useTranslations(currentLang as "es" | "en");
 
-const currentLang = Astro.currentLocale || 'es'
-const translateLabels = useTranslations(currentLang as "es" | "en" );
+import { getImage } from "astro:assets";
 
+import matcapImage from "../images/matcap.png";
+
+const optimizedMatcap = await getImage({
+    src: matcapImage,
+    width: 256,
+    format: "webp",
+});
+
+const filteredWorks = works.filter((work: { slug: string }) =>
+    work.slug.startsWith(`${currentLang}/`),
+);
+
+const images = await Promise.all(
+    filteredWorks.map(async (work: { data: { image: any } }) => {
+        const optimizedImage = await getImage({
+            src: work.data.image,
+            width: 200,
+            format: "webp",
+        });
+        return optimizedImage.src;
+    }),
+);
 ---
-<script>
-  import {initThreeScene} from "../client/tresde"
 
-  initThreeScene();
-
-  document.addEventListener('astro:after-swap',()=>{
-  initThreeScene();
-})
-</script>
-<canvas class="webgl"></canvas>
-
+<section class="hero" id="landing">
+    <div class="logo">
+        <Logo3D
+            client:only="react"
+            images={images}
+            matcapUrl={optimizedMatcap.src}
+        />
+    </div>
+    <div class="textos">
+        <p>{translateLabels("intro")}</p>
+        <div class="enlaces">
+            <a href="https://www.linkedin.com/in/alejandro-vazquez-a9b7162a4/"
+                >Linkedin</a
+            >
+            <a href="https://www.instagram.com/camelcompact99/">Instagram</a>
+            <a href="https://www.tiktok.com/@camelcompact99">TikTok</a>
+        </div>
+    </div>
+</section>
 
 <style>
-  /* Contenedor para reservar espacio para el canvas */
-  .canvas-container {
-    box-sizing: border-box;
-    position: relative; /* Para posicionar el canvas dentro */
-    width: 100%; /* Asegura que ocupa todo el ancho de la pantalla */
-    height: 100vh; /* Reserva el espacio vertical completo */
-    overflow: hidden; /* Para evitar desbordamiento */
-  }
-
-  /* Canvas de Three.js */
-  .webgl {
-    display: block;
-    position: absolute; /* Coloca el canvas dentro del contenedor */
-    top: 0;
-    left: 0;
-    width: 100%;
-    max-width: 100vw; /* Escala el canvas para ocupar todo el contenedor */
-    height: 100%; /* Escala el canvas verticalmente */
-    z-index: 5; /* Coloca el canvas detrás de otros elementos */
-    outline: none;
-  }
-
-  /* Otros estilos (tu contenido normal) */
-  section {
-    height: 100vh;
-  }
-
-  .centered {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-  }
-
-  .centered img {
-    width: 200px;
-    stroke: 5px;
-    z-index: 10; /* Mantén las imágenes encima del canvas */
-  }
-  .textos {
-    position: absolute;
-    top: 50%;
-    left: 2.5%;
-    transform: translateY(-50%);
-    margin: 0;
-    text-align: justify;
-    transition: 0.6s ease-in-out;
-    z-index:-20;
-    padding-right: 0rem;
-    transition: 0.5s;
-    line-height: 0.95;
-    color: black;
-    font-size: 5rem;
-    max-width: 90%;
-    z-index: 1; /* Asegura que el texto esté encima del fondo */
-    transition:0.3s ;
-    overflow: hidden; /* Oculta el texto fuera del contenedor */
-    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-    animation: mostrarTexto 1s, ease-out, forwards;
-    text-wrap: wrap;
-    padding: 1rem;
-    
-}
-
-.textos:hover {
-background-color: rgb(0,255,0);
-padding-bottom: 3rem;
-padding-right: 3rem;
- 
-}
-
-@media (max-width: 1500px) {
-  .textos{
-    width: 80vw;
-    top: 45%;
-    font-size: 2.5rem;
-    white-space: normal; /* Permite que el texto se divida en varias líneas */
-    word-wrap: break-word; /* Rompe las palabras largas si es necesario */
-    overflow-wrap: break-word;
-  }
- 
-}
+    .hero {
+        height: 100vh;
+        max-width: 100%;
+    }
+    .logo {
+        display: flex;
+        flex-direction: column;
+        height: 95%;
+        justify-content: flex-end;
+        margin: auto;
+    }
+    .logo-container {
+        flex-grow: 1;
+        width: 100%;
+        position: relative;
+    }
+    .textos {
+        padding-left: 2rem;
+        padding-right: 2rem;
+        width: 95%;
+        display: flex;
+        justify-content: space-between;
+        align-items: top;
+        font-size: 14px;
+        max-width: calc(100% - 2rem);
+        margin-bottom: 50rem;
+        z-index: 5;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    .textos p {
+        margin: 0;
+    }
+    .textos a {
+        text-decoration: none;
+        color: white;
+    }
+    .textos a:hover {
+        color: #00ff0d;
+    }
+    @media (max-width: 640px) {
+        .textos {
+            display: none;
+        }
+    }
 </style>
-
-<!-- Estructura HTML -->
-<div class="canvas-container" id = "landing">
-  <div class ="textos enfocar">{translateLabels('intro')}</div>
-  <canvas class="webgl"></canvas>
-</div>
-
-

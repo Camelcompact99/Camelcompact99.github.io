@@ -3,18 +3,20 @@ name: 'nomindnogreed'
 title: 'Mi trabajo más personal'
 year: '2024'
 image: '../../../images/personal.png'
+art: true
 material: 'single-channel video'
 seenIn: 'Interseccion Film Festival 2024'
 estilo: 'horizontal' 
+videoopcional: '../../../images/mi_trabajo_mas_personal_alejandro_vazquez.webm'
 ---
 
 <h3>I am someone like anyone else, probably for some advertising algorithm there is someone exactly like me, I am like another demographic profile. What do I have left to define myself to others? What do I have left to define myself?</h3>
 
-![alt text](../../../../public/images/mariomod.webp)
+![ mario 64 mod alejandro vazquez](../../../../public/images/mariomod.webp)
 
 Defining ourselves is complex. We are not only our reflection, our identity is made up of remnants, micro-narratives of ourselves that we build from the reappropriation of small elements of the cultural currents  we consume every day. The flow of images that we have to watch every day has materialized at a level that exceeds the real, the images are no longer a window through which to look as voyeurs, but a comfortable place to inhabit. They are a part of us that we mold to our measure in order to identify with them. 
 
-![captura del ](../../../../public/images/capturaprocess.webp)
+![captura del proceso Alejandro Vázquez](../../../../public/images/capturaprocess.webp)
 
 In this world of images we cannot think of ourselves as a single thing, we are more than the sum of our real sensitive experiences: we are a collection of sketches from here and there, of blurred projections, of pop figures and influencers. Thanks to the online experience we have not only our life, but also all the others we find desirable, all the ones we want to live.
 

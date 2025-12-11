@@ -1,11 +1,13 @@
 ---
-name: 'nomindnogreed' 
+name: 'mitrabajomaspersonal' 
 title: 'Mi trabajo más personal'
 year: '2024'
 image: '../../../images/personal.png'
+art: true 
 material: 'video monocanal'
 seenIn: ' Festival de Cine Interseccion 2024'
 estilo: 'horizontal'
+videoopcional: '../../../images/mi_trabajo_mas_personal_alejandro_vazquez.webm'
 ---
 
 <h3>Soy alguien como cualquier otro, probablemente para algún algoritmo publicitario haya alguien exactamente igual que yo, soy como otro perfil demográfico. ¿Qué me queda para definirme ante los demás? ¿Qué me queda para definirme a mí mismo?</h3>

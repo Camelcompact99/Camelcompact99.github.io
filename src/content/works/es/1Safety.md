@@ -3,9 +3,12 @@ name: 'safety'
 title: 'Safety Chunks'
 year: '2021'
 image: '../../../images/granimagen.png'
-material: '3d'
-seenIn: 'post digital landscapes'
+material: 'Diseño 3d,Animación,Producción en AE'
+art: true
+seenIn: 'Obra ganadora de Post Digital Landscapes MMMAD+SMTH'
 estilo: 'horizontal' 
+videoopcional: '../../../images/safety_chunks_alejandro_vazquez.webm'
+priority: 1
 ---
 <h3><a href= "https://www.youtube.com/watch?v=5y4j1W-BjA4&ab_channel=AlejandroVazquez"> Video Completo</a><h3>
 

@@ -3,6 +3,7 @@ name: 'safety'
 title: 'No Mind No Greed No Hands to Reach'
 year: '2024'
 image: '../../../images/NomindNogreed.jpg'
+art: true
 material: 'instalation'
 seenIn: 'PAM_proyectos artisticos y multimedia'
 ---

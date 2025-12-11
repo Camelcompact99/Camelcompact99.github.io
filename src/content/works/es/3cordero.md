@@ -1,11 +1,14 @@
 ---
-name: 'cordero' 
+name: 'Pluto' 
 title: 'Untitled(Ritual)'
 year: '2024'
 image: '../../../images/a.webp'
-material: 'live set'
-seenIn: 'PLUTO VALENCIA'
+art: true
+priority: 1
+material: 'Set design,Creación de una interfaz MIDI, Touchdesigner'
+seenIn: 'Live en Miss Espacial 24-Pluto Valencia'
 estilo: 'vertical' 
+videoopcional: '../../../images/pluto_alejandro_vazquez.webm'
 ---
 
 
@@ -25,7 +28,7 @@ La promesa de un mundo libre e interconectado ha sido aplastada por los grandes 
 
 Este entramado creado por las grandes tecnológicas toma la forma del cuerpo sin órganos de Deleuze en tanto en cuanto “No es Dios, si no todo lo contrario. Sin embargo es divina la energía que lo recorre, cuando atrae toda la producción y le sirve de superficie milagrosa…”
 
-Una forma de librarnos de este yugo es re-apropiandonos de nuestro deseo, construyendo algo aparentemente improductivo utilizando los ejes de coordenadas establecidos por nuestro sistema actual. Hacer la “mesa esquizofrénica” de la que hablaba Deleuze. 
+Una forma de librarnos de este yugo es re-apropiandonos de nuestro deseo, construyendo algo aparentemente improductivo utilizando los ejes de coordenadas establecidos por nuestro sistema actual.
  
 Nuestro objetivo es hacer un ritual que canalice la luz de nuestra energía deseante en un lugar fuera de las mecánicas establecidas por las grandes empresas tecnológicas, para esto mezclamos elementos simbólicos contemporáneos de nuestra lógica de consumo con elementos de iconografías religioso-medievales para crear rupturas en el continuo de las estructuras lógicas que tenemos establecidas.
 

@@ -1,123 +1,65 @@
-// src/tresde.js
-    import * as THREE from 'three';
-    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import * as THREE from 'three';
 
-
-  export function initThreeScene() {
-    let mixer, caerse, idleAction, raycaster = new THREE.Raycaster();
-    let caerseruns; 
-    let modelo;  
-    let huesoCabeza;
-
-    // Canvas
+export function initThreeScene() {
+    //CANVAS
     const canvas = document.querySelector('.webgl');
-
-    // Verificar si la escena ya ha sido inicializada para evitar errores
     if (!canvas || canvas.sceneInitialized) return;
     canvas.sceneInitialized = true;
-
-    // Tamaños
+    //TAMAÑOS
     const tamaños = {
         width: canvas.clientWidth,
-        height:canvas.clientHeight,
+        height: canvas.clientHeight,
     };
-
-    // Cursor
+    //CURSOR
     const cursor = { x: 0, y: 0 };
     window.addEventListener('mousemove', (event) => {
         cursor.x = (event.clientX / tamaños.width) * 2 - 1;
         cursor.y = -(event.clientY / tamaños.height) * 2 + 1;
     });
-
-    // Escena
+    //ESCENA
     const escena = new THREE.Scene();
-
-    // Luces
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-    escena.add(ambientLight);
-
-    const pointLight = new THREE.PointLight(0xffffff, 30);
-    pointLight.position.set(2, 3, 4);
+    //LUCES
+    const pointLight = new THREE.PointLight(0xffffff, 100);
+    pointLight.position.set(0, 0, 15);
+    
     escena.add(pointLight);
+    
+    //GEOMETRIA
+    const ancho = 16;
+    const alto = 9;
+    const segmentos = 10;
+    const geometriaPlano = new THREE.PlaneGeometry(ancho, alto, segmentos*ancho, segmentos*alto);
 
-    // Imagen de carga
-    const loadingImage = document.createElement('img');
-    loadingImage.src = '/images/preload.webp'; // Cambia esto por la ruta de tu imagen
-    loadingImage.style.position = 'absolute';
-    loadingImage.style.top = '50%';
-    loadingImage.style.left = '50%';
-    loadingImage.style.transform = 'translate(-50%, -50%)';
-    loadingImage.style.width = '300px';
-    loadingImage.style.filter = 'blur(90px)'; // Comienza con un gran desenfoque
-    loadingImage.style.transition = 'filter 0.1s ease-out'; // Suaviza la transición del desenfoque
-    document.body.appendChild(loadingImage);
+     // Crear video element
+    const video = document.createElement('video');
+    video.src = '/images/video.webm'; // Cambia esto por tu archivo
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true; // para móviles
+    video.autoplay = true;
 
-    // GLTFLoader
-    const loader = new GLTFLoader();
-    loader.load(
-        '/models/homerr.glb', // Ruta a tu modelo GLB
-        (gltf) => {
-            modelo = gltf.scene;
-            escena.add(modelo);
+    // Necesario para algunos navegadores (por ejemplo en eventos de usuario)
+    video.addEventListener('canplay', () => {
+      video.play();
+    });
 
-            huesoCabeza = modelo.children[0].children[2].children[0].children[0].children[0].children[0].children[0];
-            
-            mixer = new THREE.AnimationMixer(modelo);
-            const caer = gltf.animations[1];
-            caerse = mixer.clipAction(caer);
-            caerse.setLoop(THREE.LoopOnce);  
-            caerse.time = 1;
-            
-            caerseruns = caerse.isRunning();
+    // Crear textura de video
+    const videoTexture = new THREE.VideoTexture(video);
+    videoTexture.minFilter = THREE.LinearFilter;
+    videoTexture.magFilter = THREE.LinearFilter;
+    videoTexture.format = THREE.RGBFormat;
 
-            const idle = gltf.animations[2];   
-            idleAction = mixer.clipAction(idle);
-            idleAction.setLoop(THREE.LoopRepeat);
-            idleAction.play();
-
-            window.addEventListener('click', onClick, false);
-
-            // Ocultar la imagen de carga al completar la carga
-            loadingImage.style.opacity = '0'; // Suaviza la transición al ocultar
-            setTimeout(() => {
-                document.body.removeChild(loadingImage);
-            }, 500); // Espera a que termine la transición
-        },
-        function (xhr) {
-            // Ajustar el desenfoque de la imagen según el progreso de carga
-            const progress = xhr.loaded / xhr.total;
-            loadingImage.style.filter = `blur(${20 - progress * 20}px)`; // Reduce el desenfoque
-        },
-        function (error) {
-            console.error('An error happened', error);
-        }
-    );
-
-    function onClick(event) {
-       
-
-        if (!modelo) {
-            console.error("El modelo aún no ha sido cargado.");
-            return;
-        }
-
-        cursor.x = (event.clientX / window.innerWidth) * 2 - 1;
-        cursor.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-        raycaster.setFromCamera(cursor, camara);
-
-        const intersects = raycaster.intersectObject(modelo, true);
-
-        if (intersects.length > 0) {
-            caerse.reset();
-            caerse.play();
-        }
-    }
-
+    const materialPlano = new THREE.MeshPhongMaterial({ 
+        map: videoTexture,
+        side: THREE.DoubleSide,
+        shininess: 10, // brillo especular
+        specular: 0x222222 // color del brillo
+        }); // Fin material
+    const plano = new THREE.Mesh(geometriaPlano, materialPlano);
+    escena.add(plano);
 
     const camara = new THREE.PerspectiveCamera(75, tamaños.width / tamaños.height);
-    camara.position.set(-3.8, 2.5, 0.56);
-    camara.rotation.set(-1.5, -1.2,-1.5);
+    camara.position.z = 10;
     escena.add(camara);
 
     const renderizador = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
@@ -130,25 +72,64 @@
 
         camara.aspect = tamaños.width / tamaños.height;
         camara.updateProjectionMatrix();
-
         renderizador.setSize(tamaños.width, tamaños.height);
     });
 
+    // Anim RayCasting
+    const raycaster = new THREE.Raycaster();
+    const posAttr = geometriaPlano.attributes.position;
+    const zOriginal = Float32Array.from(posAttr.array); // Guardar copia original de z
+
+    const deformacionMax = 10;
     const reloj = new THREE.Clock();
     const tick = () => {
-        const delta = reloj.getDelta();
-        if (mixer) mixer.update(delta);
-        if (huesoCabeza) {
-            const maxRotationY = Math.PI / 3; // Limitar a ±30 grados
-            const maxRotationX = Math.PI / 5; // Limitar a ±30 grados
-            huesoCabeza.rotation.y = cursor.x * maxRotationY;
-            huesoCabeza.rotation.x = cursor.y * maxRotationX*-1;
+    const tiempo = reloj.getElapsedTime();
+    const radioBase = 1;
+    const radioVariable = radioBase + Math.sin(tiempo * 2) * 0.5;
+    
+    raycaster.setFromCamera(cursor, camara);
+    const intersecciones = raycaster.intersectObject(plano);
+    
+
+    if (intersecciones.length > 0) {
+        const punto = intersecciones[0].point;
+
+        for (let i = 0; i < posAttr.count; i++) {
+            const ix = posAttr.getX(i);
+            const iy = posAttr.getY(i);
+            const izOriginal = zOriginal[i * 3 + 2];
+
+            const dx = ix - punto.x;
+            const dy = iy - punto.y;
+
+            // Aquí puedes meter distorsión (como vimos antes)
+            const ruido = Math.sin(ix * 3 + tiempo) * Math.cos(iy * 3 - tiempo);
+            const distancia = Math.sqrt(dx * dx + dy * dy) * (1 + 0.3 * ruido);
+
+            const influencia = Math.exp(-(distancia ** 2) / (radioVariable ** 2));
+            const wave = Math.sin(distancia * 10 + tiempo * 3) + Math.cos(distancia * 15 - tiempo * 2);
+            const deformacion = -influencia * Math.abs(wave) * deformacionMax;
+
+            const zActual = posAttr.getZ(i);
+            const nuevoZ = THREE.MathUtils.lerp(zActual, izOriginal + deformacion, 0.2);
+            posAttr.setZ(i, nuevoZ);
         }
+    } else {
+        // Relajación: volver a la posición original
+        for (let i = 0; i < posAttr.count; i++) {
+            const zActual = posAttr.getZ(i);
+            const izOriginal = zOriginal[i * 3 + 2];
+            const nuevoZ = THREE.MathUtils.lerp(zActual, izOriginal, 0.1); // más lento para suavidad
+            posAttr.setZ(i, nuevoZ);
+        }
+    }
 
-        renderizador.render(escena, camara);
+    posAttr.needsUpdate = true;
+    renderizador.render(escena, camara);
+    window.requestAnimationFrame(tick);
+};
 
-        window.requestAnimationFrame(tick);
-    };
 
     tick();
 }
+

@@ -3,9 +3,13 @@ name: 'safety'
 title: 'Safety Chunks'
 year: '2021'
 image: '../../../images/safety.png'
-material: '3d'
-seenIn: 'post digital landscapes'
+art: true
+material: '3D design, Animation,Production in AE'
+seenIn: 'Post digital landscapes'
 estilo: 'horizontal' 
+videoopcional: '../../../images/safety_chunks_alejandro_vazquez.webm'
+priority: 1
+
 ---
 <h3><a href= "https://www.youtube.com/watch?v=5y4j1W-BjA4&ab_channel=AlejandroVazquez"> See the full video</a><h3>
 

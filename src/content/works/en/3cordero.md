@@ -1,11 +1,15 @@
 ---
-name: 'cordero' 
-title: 'Live at Pluto'
+name: 'Pluto' 
+title: 'Untitled (Ritual)'
 year: '2024'
 image: '../../../images/a.webp'
-material: 'live set'
-seenIn: 'PLUTO VALECIA'
+art: true
+priority: 1
+material: 'Set design,Creation of a MIDI device,AV Visuals'
+seenIn: 'Live at  Miss Espacial 24 - Pluto Valencia'
 class: 'vertical' 
+videoopcional: '../../../images/pluto_alejandro_vazquez.webm'
+
 ---
 
 <h3>Photograhy by  <a href="https://www.instagram.com/errandoestamostodos/">Nacho Errando-@errandoestamostodos</a>- at <a href="https://www.instagram.com/pluto______________/">@Pluto</a></h3>
@@ -23,8 +27,7 @@ The promise of a free and interconnected world has been demolished by powerful e
 
 This framework created by the great technologies takes the form of Deleuze's body without organs insofar as “It is not God, but quite the opposite. However, the energy that runs through it is divine, when it attracts all production and serves as a miraculous surface...”
 
-One way to free ourselves from this yoke is to re-appropriate our desire, building something apparently unproductive using the axes of coordinates established by our current system. To make the “schizophrenic table” that Deleuze spoke of. 
- 
+
 Our goal is to make a ritual that channels the light of our desiring energy in a place outside the mechanics established by the big technological companies, for this we mix contemporary symbolic elements of our consumer logic with elements of religious-medieval iconographies to create ruptures in the continuum of the logical structures that we have established.
 
 ![molde proceso](../../../../public/images/molde.webp)

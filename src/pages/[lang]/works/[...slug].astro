@@ -1,185 +1,183 @@
-
 ---
 import type { GetStaticPaths } from "astro";
-import { getCollection , render } from "astro:content";
+import { getCollection, render } from "astro:content";
 import Layout from "../../../layouts/Layout.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Image } from "astro:assets";
 
-const currentLang = Astro.currentLocale || 'es'
+const currentLang = Astro.currentLocale || "es";
 
 export async function getStaticPaths() {
-    const works = await getCollection("works")
-    const paths = works.map(work=>{
-        const[lang, ...slug] = work.slug.split('/');
-        return { params: { lang, slug: slug.join('/') || undefined }, props: work};
-    })
- return paths
+    const works = await getCollection("works");
+    const paths = works.map((work) => {
+        const [lang, ...slug] = work.slug.split("/");
+        return {
+            params: { lang, slug: slug.join("/") || undefined },
+            props: work,
+        };
+    });
+    return paths;
 }
 const { lang, slug } = Astro.params;
-const work = Astro.props
-const {title,image,year,material,seenIn} = work.data
-const {Content} = await render(work)
-
+const work = Astro.props;
+const { title, image, year, material, seenIn } = work.data;
+const { Content } = await render(work);
 ---
 
-
 <Layout title={`${title}-Alejandro Vázquez`}>
-    <a class="goback" href={`/${currentLang}#grid`}> go back</a>
-    <main>
+    <a class="goback" href={`/${currentLang}#grid`}> Go back</a>
+    <section class="principal">
         <div class="tituloinfo">
-            <div class=" arriba">
-            <h1> {title} </h1>
-            <h4>{seenIn}</h4>
+            <div class="arriba">
+                <h1>{title}</h1>
+                <h4>{seenIn}</h4>
             </div>
             <div>
-            <h4>{material}</h4>
-            <h4> {year} </h4>    
+                <h4>{material}</h4>
+                <h4>{year}</h4>
             </div>
         </div>
-    <div class="contenido">
-    <Content></Content>
-    </div>
-    <div class = "imagen"> 
-        
-        <Image
-        transition:name= {`grid-${lang}/${slug}`}
-       src={image} alt={title} quality="mid">
-   
-    </div>
-    </main>
+        <div class="contenido">
+            <Content />
+        </div>
+        <div class="imagen">
+            <Image
+                transition:name={`grid-${lang}/${slug}`}
+                src={image}
+                alt={title}
+                quality="mid"
+            />
+        </div>
 
-    <style>
-    main {
-    display: flex;
-    padding-left: 20px;
-    padding-right: 20px;
-    flex-direction: row;
-    }
-    .goback{
-        position: fixed;
-        z-index: 2;
-        margin: 20px;
-        color: black;
-        font-family: "OT Bulb Monoline";
-        text-transform: uppercase;
-        text-decoration: underline;
-        font-size: 1em;
-        padding: 0.5rem;
-        background-color: rgba(224, 224, 224, 0.6);
-        backdrop-filter: blur(10px);
-        transition: 0.2s;
-        font-size: 1.3rem;
+        <style>
+            html {
+                font-size: 13px;
+                text-align: justify;
+            }
+            .principal {
+                display: flex;
+                padding-left: 20px;
+                padding-right: 20px;
+                flex-direction: row;
+            }
+            .goback {
+                position: fixed;
+                z-index: 2;
+                margin-left: 2rem;
+                margin-top: 0.65rem;
+                color: white;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                text-decoration: none;
+                font-size: 15px;
+                background-color: rgba(224, 224, 224, 0.1);
+                backdrop-filter: blur(20px);
+                transition: 0.2s;
+            }
 
-    }
+            .goback:hover {
+                color: rgb(0, 255, 0);
+            }
 
-    .goback:hover{
-        background-color: rgba(0, 224, 0, 1);
-        padding-inline: 2rem;
-    }
+            .imagen {
+                order: 1;
+                width: 35%; /* Mantén el espacio reservado para la imagen en el flexbox */
+                position: relative; /* Importante para evitar que el diseño colapse */
+                max-width: 600px;
+            }
 
-    .imagen {
-    order: 1;
-    width: 35%; /* Mantén el espacio reservado para la imagen en el flexbox */
-    position: relative; /* Importante para evitar que el diseño colapse */
-    }
+            .imagen img {
+                padding-top: 100px;
+                position: sticky;
+                top: 0;
+                width: 100%; /* Adjust as needed */
+                height: auto;
+                max-height: 100vh;
+                object-fit: cover;
+            }
 
-    .imagen img {
-    padding-top: 100px;
-    position: sticky;
-    top: 0;
-    width: 100%; /* Adjust as needed */
-    height: auto;
-    max-height: 100vh;
-    object-fit: cover;
-    }
+            .tituloinfo {
+                position: sticky;
+                top: 0; /* Mantén el contenido pegado al tope al hacer scroll */
+                height: 95vh;
+                overflow: hidden; /* Bloquea el scroll interno */
+                width: 18%;
+                align-content: flex-end;
+                padding-bottom: 5vh;
+                flex-direction: row;
+                padding-right: 15px;
+            }
 
+            .tituloinfo * {
+                margin: 0;
+                display: flex;
+                justify-content: space-between; /* Distribuir los elementos horizontalmente */
+                align-items: flex-start;
+            }
 
-    .tituloinfo{
-        position: sticky;
-        top: 0; /* Mantén el contenido pegado al tope al hacer scroll */
-        height: 95vh;
-        overflow: hidden; /* Bloquea el scroll interno */
-        width: 18%;
-        align-content: flex-end;
-        padding-bottom: 5vh;
-        flex-direction: row;
-        padding-right: 15px;
-    }
+            .tituloinfo h1 {
+                font-weight: 400;
+                font-size: 15px;
+            }
+            .contenido h3 {
+                font-weight: 400;
+                font-size: 15px;
+            }
+            .tituloinfo h4 {
+                font-weight: 400;
+                font-size: 13px;
+            }
+            .arriba {
+                padding-top: 80vh;
+                flex-direction: column;
+                align-items: flex-start;
+            }
 
-    .tituloinfo * {
-        margin: 0; 
-        display: flex;
-        justify-content: space-between; /* Distribuir los elementos horizontalmente */
-        align-items: flex-start;
-    }
+            .contenido {
+                padding-top: 100px;
+                order: 2;
+                width: 35%;
+                max-width: 600px;
+                padding-left: 1.5rem;
+            }
 
-    .tituloinfo h1 {
-        font-weight: 500;
-        font-size: 1.5rem;
-    }
-    .tituloinfo h4 {
-        font-weight: 500;
-        
-    }
-    .arriba{
-        
-        padding-top: 80vh; 
-        flex-direction:column;
-        align-items: flex-start;
-    }
+            @media (max-width: 1030px) {
+                .principal {
+                    display: flex;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                    flex-direction: column;
+                }
 
-   
-    .contenido {
-    padding-top: 100px;
-    order: 2;
-    width: 30%;
-    max-width: 600px; 
-    padding-left: 1.5rem;
-    }
-
-    @media (max-width: 1030px) {
-    main {
-    display: flex;
-    padding-left: 5px;
-    padding-right: 5px;
-    flex-direction: column;
-    }
-
-    .imagen{
-        order: 0;
-        width: 100%;
-    }
-    .contenido{
-        width: 100%;
-        max-width: 100%;
-        order: 2;
-    }
-    .tituloinfo{
-        height: auto;
-        position: relative;
-        order: 1;
-        width: 100%;
-    }
-    .arriba
-    {padding-top: 0%;
-    width: 100%;
-
-    }
-    .contenido{
-        padding-left: 0%;
-        padding-top: 1rem;
-    }
-    .contenido p { 
-        width: 100%;
-    }
-    .tituloinfo{
-        padding: 0%;
-    }
-  
-}
-
-
- </style>
-</Layout>
-
+                .imagen {
+                    order: 0;
+                    width: 100%;
+                }
+                .contenido {
+                    width: 100%;
+                    max-width: 100%;
+                    order: 2;
+                }
+                .tituloinfo {
+                    height: auto;
+                    position: relative;
+                    order: 1;
+                    width: 100%;
+                }
+                .arriba {
+                    padding-top: 0%;
+                    width: 100%;
+                }
+                .contenido {
+                    padding-left: 0%;
+                    padding-top: 1rem;
+                }
+                .contenido p {
+                    width: 100%;
+                }
+                .tituloinfo {
+                    padding: 0%;
+                }
+            }
+        </style>
+    </section></Layout
+>
