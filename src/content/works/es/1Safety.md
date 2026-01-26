@@ -8,6 +8,7 @@ art: true
 seenIn: 'Obra ganadora de Post Digital Landscapes MMMAD+SMTH'
 estilo: 'horizontal' 
 videoopcional: '../../../images/safety_chunks_alejandro_vazquez.webm'
+depthmap: '../../../images/safety_depth.png'
 priority: 1
 ---
 <h3><a href= "https://www.youtube.com/watch?v=5y4j1W-BjA4&ab_channel=AlejandroVazquez"> Video Completo</a><h3>

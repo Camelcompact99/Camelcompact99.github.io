@@ -44,6 +44,29 @@ const nextLangUrl = getRelativeLocaleUrl(nextLang, currentPath);
   </div>
 </section>
 
+<script is:inline>
+  document.addEventListener("astro:page-load", () => {
+    const navbar = document.querySelector(".navbar");
+
+    if (navbar) {
+      const handleScroll = () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      };
+
+      // Remove any existing scroll listener to avoid duplicates
+      window.removeEventListener("scroll", handleScroll);
+      window.addEventListener("scroll", handleScroll);
+
+      // Initial check
+      handleScroll();
+    }
+  });
+</script>
+
 <style>
   .navbar {
     position: fixed;
@@ -56,6 +79,15 @@ const nextLangUrl = getRelativeLocaleUrl(nextLang, currentPath);
     width: 95%;
     max-width: calc(100% - 2rem);
     padding-top: 0.65rem;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none; /* Prevent clicks when hidden */
+  }
+
+  /* Global class applied by script */
+  :global(.navbar.scrolled) {
+    opacity: 1;
+    pointer-events: auto;
   }
   .columna1 {
     color: white;

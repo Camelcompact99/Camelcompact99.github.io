@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import Logo3D from "../components/jsx/Logo3D.jsx";
+import InteractiveLogo from "../components/jsx/InteractiveLogo.jsx";
 import { useTranslations } from "../i18n/utils";
 const works = await getCollection("works");
 const currentLang = Astro.currentLocale || "es";
@@ -8,47 +8,50 @@ const translateLabels = useTranslations(currentLang as "es" | "en");
 
 import { getImage } from "astro:assets";
 
-import matcapImage from "../images/matcap.png";
-
-const optimizedMatcap = await getImage({
-    src: matcapImage,
-    width: 256,
-    format: "webp",
-});
-
-const filteredWorks = works.filter((work: { slug: string }) =>
-    work.slug.startsWith(`${currentLang}/`),
+const filteredWorks = works.filter(
+    (work) => work.slug.startsWith(`${currentLang}/`) && work.data.depthmap,
 );
 
-const images = await Promise.all(
-    filteredWorks.map(async (work: { data: { image: any } }) => {
+const imagesWithDepth = await Promise.all(
+    filteredWorks.map(async (work) => {
         const optimizedImage = await getImage({
             src: work.data.image,
-            width: 200,
+            width: 800, // Increased resolution for better quality on the plane
             format: "webp",
         });
-        return optimizedImage.src;
+        const optimizedDepth = await getImage({
+            src: work.data.depthmap!,
+            width: 800,
+            format: "webp",
+        });
+        const optimizedThumbnail = await getImage({
+            src: work.data.image,
+            width: 10, // Low resolution for unique preload blur
+            format: "webp",
+        });
+        return {
+            texture: optimizedImage.src,
+            depth: optimizedDepth.src,
+            thumbnail: optimizedThumbnail.src,
+        };
     }),
 );
 ---
 
+{/* Preload all thumbnail images for faster initial display */}
+{
+    imagesWithDepth.map((img) => (
+        <link rel="preload" as="image" href={img.thumbnail} />
+    ))
+}
+
 <section class="hero" id="landing">
     <div class="logo">
-        <Logo3D
-            client:only="react"
-            images={images}
-            matcapUrl={optimizedMatcap.src}
-        />
+        <InteractiveLogo client:only="react" images={imagesWithDepth} />
     </div>
     <div class="textos">
-        <p>{translateLabels("intro")}</p>
-        <div class="enlaces">
-            <a href="https://www.linkedin.com/in/alejandro-vazquez-a9b7162a4/"
-                >Linkedin</a
-            >
-            <a href="https://www.instagram.com/camelcompact99/">Instagram</a>
-            <a href="https://www.tiktok.com/@camelcompact99">TikTok</a>
-        </div>
+        <p>this is Alejandro Vázquez`s website</p>
+        <p> here you can find <a href="#grid">[his works]</a>,  <a href="#contact">[his social]</a></p>
     </div>
 </section>
 
@@ -56,6 +59,8 @@ const images = await Promise.all(
     .hero {
         height: 100vh;
         max-width: 100%;
+        position: relative; /* Needed for absolute positioning of children */
+        background-color: black;
     }
     .logo {
         display: flex;
@@ -70,18 +75,28 @@ const images = await Promise.all(
         position: relative;
     }
     .textos {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        width: auto;
+        max-width: calc(100% - 2rem); 
+        width: 300px;
         padding-left: 2rem;
         padding-right: 2rem;
-        width: 95%;
+        padding-top: 0.65rem;
+        font-size: 14px;
+        z-index: 5;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        text-align: justify;
+        color: white;
+        
+    }
+    .enlaces {
         display: flex;
         justify-content: space-between;
-        align-items: top;
-        font-size: 14px;
-        max-width: calc(100% - 2rem);
-        margin-bottom: 50rem;
-        z-index: 5;
-        color: white;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        max-width: 60%;
+        gap: 1rem;
     }
     .textos p {
         margin: 0;

@@ -8,7 +8,7 @@ material: 'Shooting,3D design,Animation'
 seenIn: 'Video For Nina Ban'
 estilo: 'horizontal' 
 videoopcional: '../../../images/cisne_alejandro_vazquez.webm'
-
+depthmap: '../../../images/Con_losOjos_Main_depth.png'
 ---
 Produje contenido digital para el sencillo “Con los Ojos” de Nina Ban, incluyendo reels, portada y fotografías de prensa. Como parte de la estrategia visual, desarrollé un cisne 3D completamente riggeado, integrado en la fotografía y en los recursos en movimiento para crear una identidad visual coherente e impactante para la artista.
 

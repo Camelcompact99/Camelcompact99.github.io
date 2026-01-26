@@ -8,7 +8,7 @@ material: 'Shooting,3D design,Animation'
 seenIn: 'Video For Nina Ban'
 estilo: 'horizontal' 
 videoopcional: '../../../images/cisne_alejandro_vazquez.webm'
-
+depthmap: '../../../images/Con_losOjos_Main_depth.png'
 ---
 Produced digital content for Nina Ban’s single “Con los Ojos”, including reels, cover art, and press photography. As part of the visual strategy, I developed a fully rigged 3D swan, which was integrated into the photography and motion assets to create a cohesive and impactful visual identity for the artist.
 

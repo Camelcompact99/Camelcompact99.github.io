@@ -9,6 +9,7 @@ material: 'Set design,Creation of a MIDI device,AV Visuals'
 seenIn: 'Live at  Miss Espacial 24 - Pluto Valencia'
 class: 'vertical' 
 videoopcional: '../../../images/pluto_alejandro_vazquez.webm'
+depthmap: '../../../images/a.webp'
 
 ---
 
