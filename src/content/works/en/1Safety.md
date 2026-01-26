@@ -7,7 +7,7 @@ art: true
 material: '3D design, Animation,Production in AE'
 seenIn: 'Post digital landscapes'
 estilo: 'horizontal' 
-videoopcional: '../../. imagessafety_chunks_alejandro_vazquez.webm'
+videoopcional: '../../../images/safety_chunks_alejandro_vazquez.webm'
 depthmap: '../../../images/safety_depth.png'
 priority: 1
 
