@@ -4,13 +4,49 @@ import { Canvas, useLoader, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { TextureLoader } from 'three'
 
-function ImagePlane({ textureUrl, depthUrl, onLoad }) {
+function ImagePlane({ textureUrl, depthUrl, onLoad, isMobile }) {
     const [texture, depth] = useLoader(TextureLoader, [textureUrl, depthUrl])
     const meshRef = useRef(null)
+    const scrollRotationRef = useRef(0)
 
     useEffect(() => {
         onLoad?.()
     }, [onLoad])
+
+    useEffect(() => {
+
+        if (!isMobile) return
+
+        const handleScroll = (e) => {
+            // Horizontal scroll for mobile rotation
+            scrollRotationRef.current += e.deltaX * 0.002
+        }
+
+        window.addEventListener('wheel', handleScroll, { passive: true })
+
+        // Touch scroll handling
+        let touchStartX = 0
+        const handleTouchStart = (e) => {
+            touchStartX = e.touches[0].clientX
+        }
+
+        const handleTouchMove = (e) => {
+            if (touchStartX) {
+                const touchDelta = e.touches[0].clientX - touchStartX
+                scrollRotationRef.current += touchDelta * 0.002
+                touchStartX = e.touches[0].clientX
+            }
+        }
+
+        window.addEventListener('touchstart', handleTouchStart, { passive: true })
+        window.addEventListener('touchmove', handleTouchMove, { passive: true })
+
+        return () => {
+            window.removeEventListener('wheel', handleScroll)
+            window.removeEventListener('touchstart', handleTouchStart)
+            window.removeEventListener('touchmove', handleTouchMove)
+        }
+    }, [isMobile])
 
     // Create a memoized geometry to avoid recreation on every render
     const geometry = useMemo(() => new THREE.PlaneGeometry(3, 3, 360, 360), [])
@@ -18,18 +54,31 @@ function ImagePlane({ textureUrl, depthUrl, onLoad }) {
     useFrame((state) => {
         if (!meshRef.current) return
 
-        // Rotation based on pointer position
-        // Make it subtler than the original code if needed, or keep it as is
-        meshRef.current.rotation.y = state.pointer.x * 0.2
-        meshRef.current.rotation.x = -state.pointer.y * 0.2
+        if (isMobile) {
+            // Mobile: Use scroll-based rotation
+            meshRef.current.rotation.y = scrollRotationRef.current
 
-        // Displacement logic
-        const maxDisplacement = 3
-        const combinedDisplacement = (Math.abs(state.pointer.x) + Math.abs(state.pointer.y)) / 2
+            // Periodic displacement animation for mobile
+            const time = state.clock.elapsedTime
+            const periodicDisplacement = Math.sin(time * 0.5) * 0.2 + 0.2 // Oscillates between 0 and 1
 
-        // Safety check for material
-        if (meshRef.current.material) {
-            meshRef.current.material.displacementScale = combinedDisplacement * maxDisplacement
+            // Safety check for material
+            if (meshRef.current.material) {
+                meshRef.current.material.displacementScale = periodicDisplacement * 1.5
+            }
+        } else {
+            // Desktop: Use pointer-based rotation
+            meshRef.current.rotation.y = state.pointer.x * 0.2
+            meshRef.current.rotation.x = -state.pointer.y * 0.2
+
+            // Displacement logic for desktop
+            const maxDisplacement = 3
+            const combinedDisplacement = (Math.abs(state.pointer.x) + Math.abs(state.pointer.y)) / 2
+
+            // Safety check for material
+            if (meshRef.current.material) {
+                meshRef.current.material.displacementScale = combinedDisplacement * maxDisplacement
+            }
         }
     })
 
@@ -45,11 +94,11 @@ function ImagePlane({ textureUrl, depthUrl, onLoad }) {
     )
 }
 
-function MovingLight() {
+function MovingLight({ isMobile }) {
     const lightRef = useRef(null)
 
     useFrame((state) => {
-        if (lightRef.current) {
+        if (lightRef.current && !isMobile) {
             lightRef.current.position.x = state.pointer.x * 2
             lightRef.current.position.y = state.pointer.y * 2
         }
@@ -61,6 +110,21 @@ function MovingLight() {
 export default function InteractiveLogo({ images = [] }) {
     const [selectedImage, setSelectedImage] = useState(null);
     const [cargado, setCargado] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
+    // Detect if device is mobile
+    useEffect(() => {
+        const checkMobile = () => {
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            const isSmallScreen = window.innerWidth <= 768;
+            setIsMobile(isTouchDevice && isSmallScreen);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     useEffect(() => {
         if (images.length > 0) {
@@ -72,7 +136,14 @@ export default function InteractiveLogo({ images = [] }) {
     if (!selectedImage) return null;
 
     return (
-        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+        <div style={{
+            width: '100%',
+            height: '100%',
+            position: 'relative',
+            // Enable horizontal scrolling on mobile for rotation
+            overflowX: isMobile ? 'auto' : 'hidden',
+            touchAction: isMobile ? 'pan-x' : 'auto'
+        }}>
             {/* Preload blurred overlay */}
             <div
                 style={{
@@ -95,12 +166,13 @@ export default function InteractiveLogo({ images = [] }) {
 
             <Canvas camera={{ position: [0, 0, 0.5], fov: -200 }}>
                 <ambientLight intensity={0.5} />
-                <MovingLight />
+                <MovingLight isMobile={isMobile} />
                 <Suspense fallback={null}>
                     <ImagePlane
                         textureUrl={selectedImage.texture}
                         depthUrl={selectedImage.depth}
                         onLoad={() => setCargado(true)}
+                        isMobile={isMobile}
                     />
                 </Suspense>
             </Canvas>
